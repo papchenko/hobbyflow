@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { FaYoutube } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { supabase } from "../../supabase";
 import logoImg from "../../assets/logo.svg";
+import DonateModal from "../pages/home/DonateModal";
 
 const Footer = () => {
   const { theme } = useTheme();
+  const [isDonateOpen, setIsDonateOpen] = useState(false);
 
   const textColor =
     theme === "light" ? "text-gray-600" : "text-gray-400";
@@ -67,7 +70,8 @@ const Footer = () => {
     <footer className={`pt-14 pb-8 border-t ${bgColor}`}>
       <div className="container mx-auto px-4">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10"> */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-10">
 
           {/* Brand */}
           <div>
@@ -113,6 +117,19 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
+          </div>
+          {/* Donate */}
+          <div>
+            <h4 className={`font-semibold mb-4 ${textColor}`}>Support Us</h4>
+              <p className={`text-sm mb-0 ${textColor}`}>
+                Our project is constantly improving.  
+                Your support helps us grow!
+              </p>
+              <button
+                onClick={() => setIsDonateOpen(true)}
+                className="inline-block font-bold px-0 py-2 rounded-md transition text-gray-700 dark:text-white hover:text-[var(--accept-color)] dark:hover:text-[var(--accept-color)]">
+                Donate
+              </button>
           </div>
 
           {/* Contact */}
@@ -167,6 +184,10 @@ const Footer = () => {
           © {new Date().getFullYear()} BookFlow. All rights reserved.
         </div>
       </div>
+      <DonateModal
+        isOpen={isDonateOpen}
+        setIsOpen={setIsDonateOpen}
+      />
     </footer>
   );
 };

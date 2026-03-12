@@ -129,7 +129,7 @@ const ProductModal = ({ book, onClose }) => {
                   }
                 }, 0);
               }}
-              className="w-full h-full"
+              className="modal-swiper w-full h-full"
             >
               {productImages.map((img, idx) => (
                 <SwiperSlide key={idx} className="flex justify-center items-center">

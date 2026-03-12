@@ -8,13 +8,14 @@ import { supabase } from "../../../supabase";
 import ProductModal from "../../cart/ProductModal";
 import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { toast } from "react-toastify";
 import ShopProductModal from "./ShopProductModal";
-import DonateModal from "./DonateModal";
+// import DonateModal from "./DonateModal";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const Home = () => {
   
@@ -22,8 +23,8 @@ const Home = () => {
   const [itemsToShow, setItemsToShow] = useState(4);
   const [selectedBook, setSelectedBook] = useState(null);
   const [selectedShopProduct, setSelectedShopProduct] = useState(null);
-  const [isDonateOpen, setIsDonateOpen] = useState(false);
-  const [donors, setDonors] = useState([]);
+  // const [isDonateOpen, setIsDonateOpen] = useState(false);
+  // const [donors, setDonors] = useState([]);
 
   const { addToCart } = useCart();
 
@@ -56,25 +57,25 @@ const Home = () => {
     fetchLatestBooks();
   }, []);
 
-  useEffect(() => {
-  const fetchDonors = async () => {
+  // useEffect(() => {
+  // const fetchDonors = async () => {
 
-    const { data, error } = await supabase
-      .from("donations")
-      .select("name, amount, created_at")
-      .order("created_at", { ascending: false })
-      .limit(10);
+  //   const { data, error } = await supabase
+  //     .from("donations")
+  //     .select("name, amount, created_at")
+  //     .order("created_at", { ascending: false })
+  //     .limit(10);
 
-    if (error) {
-      console.error("Error loading donors:", error);
-      return;
-    }
+  //   if (error) {
+  //     console.error("Error loading donors:", error);
+  //     return;
+  //   }
 
-    setDonors(data);
-    };
+  //   setDonors(data);
+  //   };
 
-    fetchDonors();
-  }, []);
+  //   fetchDonors();
+  // }, []);
 
   useEffect(() => {
     if (!swiperRef.current || !prevRef.current || !nextRef.current) return;
@@ -103,28 +104,84 @@ const Home = () => {
 
   return (
     <div>
-      <section className="relative w-full min-h-[70vh] sm:h-screen flex flex-col justify-center items-center text-white bg-gradient-to-br
-                from-[#e0f2fe]
-                via-[#bae6fd]
-                to-[#7dd3fc]
+      {/* HERO SLIDER */}
+      <section className="relative w-full overflow-hidden">
 
-                dark:bg-gradient-to-br
-                dark:from-[#111018]
-                dark:via-[#1b1a2b]
-                dark:to-[#1c2a3a] overflow-hidden">
-        <div className="absolute inset-0 flex">
-        </div>
-        <div className="w-full px-4 text-center max-w-7xl z-10">
-          <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-gray-800 dark:text-white">
-            Share Knowledge, Inspire Others
-          </h1>
-          <p className="text-xl sm:text-xl md:text-2xl lg:text-3xl mb-12 max-w-3xl mx-auto text-gray-800 dark:text-white">
-            Here you can sell books, lend them as collateral — instead of letting them gather dust on your shelf.
-          </p>
-          <Link to="/books" className="bg-[var(--secondary-color)] hover:bg-[var(--secondary-color-hover)] py-4 px-9 sm:py-4 sm:px-10 rounded-full font-bold transition duration-300 text-sm sm:text-base md:text-lg">
-            Explore Library
-          </Link>
-        </div>
+          <Swiper
+            className="home-swiper w-full h-[70vh] sm:h-screen"
+            modules={[Autoplay, Pagination]}
+            slidesPerView={1}
+            loop={true}
+            pagination={{ clickable: true }}
+          >
+
+          {/* SLIDE 1 */}
+          <SwiperSlide>
+            <div className="w-full h-full flex flex-col justify-center items-center text-center text-white bg-gradient-to-br
+              from-[#e0f2fe]
+              via-[#bae6fd]
+              to-[#7dd3fc]
+
+              dark:from-[#111018]
+              dark:via-[#1b1a2b]
+              dark:to-[#1c2a3a]">
+
+              <div className="px-4 max-w-7xl">
+
+                <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-gray-800 dark:text-white">
+                  Share Knowledge, Inspire Others
+                </h1>
+
+                <p className="text-xl sm:text-xl md:text-2xl lg:text-3xl mb-12 max-w-3xl mx-auto text-gray-800 dark:text-white">
+                  Here you can sell books, lend them as collateral — instead of letting them gather dust on your shelf.
+                </p>
+
+                <Link
+                  to="/books"
+                  className="bg-[var(--secondary-color)] hover:bg-[var(--secondary-color-hover)] py-4 px-9 sm:px-10 rounded-full font-bold transition duration-300"
+                >
+                  Explore Library
+                </Link>
+
+              </div>
+            </div>
+          </SwiperSlide>
+
+
+          {/* SLIDE 2 PREMIUM */}
+          <SwiperSlide>
+            <div className="w-full h-full flex flex-col justify-center items-center text-center bg-gradient-to-br
+              from-[#e0f2fe]
+              via-[#bae6fd]
+              to-[#7dd3fc]
+
+              dark:from-[#111018]
+              dark:via-[#1b1a2b]
+              dark:to-[#1c2a3a] text-gray-600 dark:text-white">
+
+              <div className="px-4 max-w-4xl">
+
+                <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                  Get Taker Premium
+                </h2>
+
+                <p className="text-2xl mb-10">
+                  Want to sell or lend books for a specific time?
+                  Complete full registration, activate premium and unlock the full power of the platform.
+                </p>
+
+                <Link
+                  to="/takers-premium"
+                  className="inline-block bg-[var(--secondary-color)] hover:bg-[var(--secondary-color-hover)] text-white font-bold py-3 px-8 rounded-full transition duration-300"
+                >
+                  View Details
+                </Link>
+
+              </div>
+            </div>
+          </SwiperSlide>
+        </Swiper>
+
       </section>
       {/* Most New Section */}
       <section className="py-12 dark:bg-gray-800">
@@ -142,31 +199,6 @@ const Home = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-      {/* Promotional Section */}
-      <section className="py-12 bg-gradient-to-br
-        from-[#e0f2fe]
-        via-[#bae6fd]
-        to-[#7dd3fc]
-
-        dark:bg-gradient-to-br
-        dark:from-[#111018]
-        dark:via-[#1b1a2b]
-        dark:to-[#1c2a3a] 
-        
-        text-gray-600 dark:text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Get Taker</h2>
-          <p className="text-2xl mb-6">
-            Want to sell or to lend a book for a certain period of time books?
-            Complete the full user registration, purchase premium, and get the most out of our platform!
-          </p>
-          <Link
-            to="/takers-premium"
-            className="inline-block bg-[var(--secondary-color)] hover:bg-[var(--secondary-color-hover)] text-white font-bold py-2 px-6 rounded-full transition duration-300">
-            View Details
-          </Link>
         </div>
       </section>
 
@@ -250,7 +282,7 @@ const Home = () => {
         </div>
       </section>
       {/* Donate Section */}
-      <section className="py-12 bg-gradient-to-br
+      {/* <section className="py-12 bg-gradient-to-br
         from-[#e0f2fe]
         via-[#bae6fd]
         to-[#7dd3fc]
@@ -276,8 +308,6 @@ const Home = () => {
             className="inline-block bg-[var(--accept-color)] hover:bg-[var(--accept-color-hover)] text-white font-bold py-2 px-6 rounded-full transition duration-300">
             Donate
           </button>
-
-          {/* DONORS CAROUSEL */}
 
           {donors.length > 0 && (
             <div className="mt-10 max-w-4xl mx-auto">
@@ -333,7 +363,7 @@ const Home = () => {
       <DonateModal
         isOpen={isDonateOpen}
         setIsOpen={setIsDonateOpen}
-      />
+      /> */}
       {selectedBook && (
         <ProductModal
           book={selectedBook}
