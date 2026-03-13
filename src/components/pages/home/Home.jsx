@@ -6,10 +6,14 @@ import { useCart } from "../../../context/CartContext";
 import { db } from "../../../firebase";
 import ProductModal from "../../cart/ProductModal";
 import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ShopProductModal from "./ShopProductModal";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import { toast } from "react-toastify";
+// swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -20,6 +24,8 @@ const Home = () => {
   const [itemsToShow, setItemsToShow] = useState(4);
   const [selectedBook, setSelectedBook] = useState(null);
   const [selectedShopProduct, setSelectedShopProduct] = useState(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const { addToCart } = useCart();
 
@@ -77,6 +83,15 @@ const Home = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handlePremiumClick = () => {
+    if (!user) {
+      toast.info("Please sign in to access Premium");
+      return;
+    }
+
+    navigate("/takers-premium");
+  };
+
   return (
     <div>
       {/* HERO SLIDER */}
@@ -133,24 +148,19 @@ const Home = () => {
               dark:from-[#111018]
               dark:via-[#1b1a2b]
               dark:to-[#1c2a3a] dark:text-white">
-
               <div className="px-4 max-w-4xl">
-
                 <h2 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-gray-800 dark:text-white">
                   Unlock Taker Premium
                 </h2>
-
                 <p className="text-2xl sm:text-xl md:text-2xl lg:text-3xl mb-12 max-w-3xl mx-auto text-gray-800 dark:text-white">
                   Want to lend or sell books for a specific period? Activate Premium, gain full control over listings, and unlock all platform features for maximum reach and engagement.
                 </p>
-
-                <Link
-                  to="/takers-premium"
+                <button
+                  onClick={handlePremiumClick}
                   className="inline-block bg-[var(--secondary-color)] hover:bg-[var(--secondary-color-hover)] text-white font-bold py-3 px-8 rounded-full transition duration-300"
                 >
                   Learn More
-                </Link>
-
+                </button>
               </div>
             </div>
           </SwiperSlide>
@@ -188,7 +198,7 @@ const Home = () => {
           {/* relative wrapper */}
           <div className="relative">
             <Swiper
-            className="pt-4"
+              className="pt-4"
               modules={[Autoplay, Navigation]}
               spaceBetween={15}
               loop={true}
@@ -214,7 +224,7 @@ const Home = () => {
                       p-4 sm:p-5"
                   >
                     {/* Image */}
-                    <div className="flex-shrink-0 w-28 h-32 sm:w-60 sm:h-40 mr-4 sm:mr-6 flex justify-center items-center">
+                    <div className="flex-shrink-0 w-28 h-40 sm:w-40 sm:h-40 sm:mr-2 flex justify-center items-center">
                       <img
                         src={item.image}
                         alt={item.name}
