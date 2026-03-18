@@ -11,6 +11,7 @@ import ShopProductModal from "./ShopProductModal";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { toast } from "react-toastify";
+import logoImg from "../../../assets/logo.svg";
 // swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
@@ -161,6 +162,43 @@ const Home = () => {
                 >
                   Learn More
                 </button>
+              </div>
+            </div>
+          </SwiperSlide>
+          {/* SLIDE 3 */}
+          <SwiperSlide>
+            <div className="w-full h-full flex flex-col justify-center items-center text-center bg-gradient-to-br
+              from-[#e0f2fe]
+              via-[#bae6fd]
+              to-[#7dd3fc]
+
+              dark:from-[#111018]
+              dark:via-[#1b1a2b]
+              dark:to-[#1c2a3a] dark:text-white">
+
+              <div className="px-4 max-w-4xl">
+                
+                <div className=" flex flex-col items-center gap-1 justify-center text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-gray-800 dark:text-white">
+                  {/* <img
+                    src={logoImg}
+                    alt="Logo"
+                    className="logo-img-hero transition dark:invert w-28"
+                  /> */}
+                  Bookflow Reader
+                </div>
+
+                <p className="text-2xl sm:text-xl md:text-2xl lg:text-3xl mb-12 max-w-3xl mx-auto text-gray-800 dark:text-white">
+                  Online book reader – from our service.
+                  Upload, manage, and read your books with maximum comfort.
+                </p>
+
+                <button
+                  onClick={() => navigate("/reader")}
+                  className="inline-block bg-[var(--secondary-color)] hover:bg-[var(--secondary-color-hover)] text-white font-bold py-3 px-8 rounded-full transition duration-300"
+                >
+                  Start Reading
+                </button>
+
               </div>
             </div>
           </SwiperSlide>

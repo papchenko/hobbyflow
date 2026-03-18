@@ -40,12 +40,13 @@ import ScrollToTop from './components/scroll/ScrollToTop';
 // notifications
 import SellerNotifications from "./components/notifications/SellerNotifications";
 import BuyerNotifications from "./components/notifications/BuyerNotifications";
+// reader
+import UniversalBookReader from "./components/reader/UniversalBookReader";
 // legal
 import TermsOfUse from "./components/pages/legal/TermsOfUse";
 import PrivacyPolicy from "./components/pages/legal/PrivacyPolicy";
 import CookiePolicy from "./components/pages/legal/CookiePolicy";
 import CookieBanner from "./components/pages/legal/CookieBanner";
-
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
                 <Route path="/terms" element={<TermsOfUse />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/cookies" element={<CookiePolicy />} />
+                <Route path="/reader" element={<UniversalBookReader />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

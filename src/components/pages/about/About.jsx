@@ -24,9 +24,10 @@ const About = () => {
 
   const versions = [
     "1.0.1 Release",
-    "1.1.1 Shop - modal card details implemented",
-    "1.2.1 Favorites - the ability to add your favorite books to favorites",
-    "1.3.1 Donate - from now on you can donate",
+    "1.1.5 Shop - modal card details implemented",
+    "1.2.7 Favorites - the ability to add your favorite books to favorites",
+    "1.3.3 Donate - from now on you can donate",
+    "1.4.9 Bookflow Reader v 1.0.0",
   ];
 
   return (
@@ -79,10 +80,10 @@ const About = () => {
       <section className={`py-0 pt-10 border-t ${borderColor} dark:border-gray`}>
       <div className="container mx-auto px-4 max-w-4xl flex flex-col md:flex-row items-center md:items-start gap-6">
           <p className={`${textColor} px-4 pb-1 text-sm`}>
-            Stable version 1.3.1
+            Stable version 1.4.9
           </p>
           <p className={`${textColor} px-4 pb-1 text-sm`}>
-            Release 132_30
+            Release 149_90
           </p>
         <div className="">
           <div
