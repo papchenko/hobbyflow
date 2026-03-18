@@ -124,7 +124,7 @@ body {
   }
 }
 /* -------------------------------------------------------- */
-.home-swiper .swiper-pagination-bullet {
+/* .home-swiper .swiper-pagination-bullet {
   width: 40px;
   height: 4.5px;
   border-radius: 4px;
@@ -151,4 +151,62 @@ body {
 @keyframes progress {
   0% { transform: scaleX(0); }
   100% { transform: scaleX(1); }
+} */
+/* -------------------------------------------------------- */
+.hero-progress {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 999px;
+  overflow: hidden;
+  z-index: 20;
 }
+
+.hero-progress-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--secondary-color);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0s linear;
+}
+
+@media (max-width: 768px) {
+  .hero-progress {
+    bottom: 40px;
+    width: 80px;
+  }
+}
+/* stories progress */
+/* .stories-progress {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  width: 300px;
+  z-index: 20;
+}
+
+.story-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.story-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--secondary-color);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.1s linear;
+} */
+/* stories progress */

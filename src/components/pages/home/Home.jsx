@@ -27,6 +27,9 @@ const Home = () => {
   const [selectedShopProduct, setSelectedShopProduct] = useState(null);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [progress, setProgress] = useState(0);
+  // const [activeIndex, setActiveIndex] = useState(0); //stories progress
+  // const [secondsLeft, setSecondsLeft] = useState(0); //stories progress
 
   const { addToCart } = useCart();
 
@@ -97,7 +100,7 @@ const Home = () => {
     <div>
       {/* HERO SLIDER */}
       <section className="relative w-full overflow-hidden">
-        <Swiper
+        {/* <Swiper
           className="home-swiper w-full h-[70vh] sm:h-screen"
           modules={[Autoplay, Pagination]}
           slidesPerView={1}
@@ -107,6 +110,23 @@ const Home = () => {
           }}
           loop={true}
           pagination={{ clickable: true }}
+        > */}
+        <Swiper
+          className="home-swiper w-full h-[70vh] sm:h-screen"
+          modules={[Autoplay]}
+          slidesPerView={1}
+          loop={true}
+          autoplay={{
+            delay: 20000,
+            disableOnInteraction: false,
+          }}
+          // onSlideChange={(swiper) => { //stories progress
+          //   setActiveIndex(swiper.realIndex); //stories progress
+          // }} //stories progress
+          onAutoplayTimeLeft={(swiper, time, percentage) => {
+            setProgress(1 - percentage);
+            // setSecondsLeft(Math.ceil(time / 1000)); //stories progress
+          }}
         >
           {/* SLIDE 1 */}
           <SwiperSlide>
@@ -203,7 +223,31 @@ const Home = () => {
             </div>
           </SwiperSlide>
         </Swiper>
-
+        {/* stories progress */}
+        {/* <div className="stories-progress">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="story-bar">
+              <div
+                className="story-fill"
+                style={{
+                  transform:
+                    i < activeIndex
+                      ? "scaleX(1)"
+                      : i === activeIndex
+                      ? `scaleX(${progress})`
+                      : "scaleX(0)",
+                }}
+              />
+            </div>
+          ))}
+        </div> */}
+        {/* stories progress */}
+        <div className="hero-progress">
+        <div
+          className="hero-progress-fill"
+          style={{ transform: `scaleX(${progress})` }}
+        />
+      </div>
       </section>
       {/* Most New Section */}
       <section className="py-12 dark:bg-gray-800">
