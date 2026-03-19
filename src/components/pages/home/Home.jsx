@@ -96,6 +96,15 @@ const Home = () => {
     navigate("/takers-premium");
   };
 
+  const handleReaderClick = () => {
+    if (!user) {
+      toast.info("Please sign in to use the reader");
+      return;
+    }
+
+    navigate("/reader");
+  };
+
   return (
     <div>
       {/* HERO SLIDER */}
@@ -211,14 +220,12 @@ const Home = () => {
                   Online book reader – from our service.
                   Upload, manage, and read your books with maximum comfort.
                 </p>
-
                 <button
-                  onClick={() => navigate("/reader")}
+                  onClick={handleReaderClick}
                   className="inline-block bg-[var(--secondary-color)] hover:bg-[var(--secondary-color-hover)] text-white font-bold py-3 px-8 rounded-full transition duration-300"
                 >
                   Start Reading
                 </button>
-
               </div>
             </div>
           </SwiperSlide>

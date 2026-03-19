@@ -265,7 +265,7 @@ export default function UniversalBookReader() {
       <div className="h-screen flex flex-col dark:bg-gray-900 text-gray-700 dark:text-white">
         <div className="p-2 border-b flex gap-2 dark:bg-gray-800">
           <input type="file" onChange={handleFile} />
-          <button onClick={toggleFullscreen} className="text-gray-700 dark:text-white"><RxEnterFullScreen /></button>
+          <button onClick={toggleFullscreen} className="hidden md:block text-gray-700 dark:text-white"><RxEnterFullScreen /></button>
         </div>
         <iframe
             src={`https://docs.google.com/gview?url=${fileUrl}&embedded=true`}
@@ -279,7 +279,7 @@ export default function UniversalBookReader() {
   return (
     <div className="h-screen flex flex-col overflow-hidden dark:bg-gray-900 text-gray-700 dark:text-white" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       {showControls && (
-        <div className="px-4 py-2 md:px-16 flex flex-wrap gap-3 items-center border-b bg-white/90 backdrop-blur dark:bg-gray-800/90">
+        <div className="text-xl px-4 py-2 md:px-16 flex flex-wrap gap-3 items-center border-b bg-white/90 backdrop-blur dark:bg-gray-800/90">
         <div className="flex items-center justify-center gap-3">
             <div className="relative">
             <FaQuestionCircle
@@ -346,13 +346,13 @@ export default function UniversalBookReader() {
             }}
             />
           </div>
-          <button onClick={prev}><FaArrowLeft /></button>
-          <button onClick={next}><FaArrowRight /></button>
-          <button onClick={() => setFontSize((s) => s - 10)}>A-</button>
-          <span>{fontSize}%</span>
-          <button onClick={() => setFontSize((s) => s + 10)}>A+</button>
-          <button onClick={toggleFullscreen}><RxEnterFullScreen /></button>
-          <span className="ml-auto text-base">
+          <button onClick={prev}><FaArrowLeft className="text-gray-600 dark:text-white" /></button>
+          <button onClick={next}><FaArrowRight className="text-gray-600 dark:text-white mr-6" /></button>
+          <button onClick={() => setFontSize((s) => s - 10)} className="font-semibold">A-</button>
+          <span className="font-semibold">{fontSize}%</span>
+          <button onClick={() => setFontSize((s) => s + 10)} className="font-semibold ">A+</button>
+          <button onClick={toggleFullscreen} className="hidden md:block"><RxEnterFullScreen className="font-semibold" /></button>
+          <span className="ml-auto text-base font-semibold">
             {type === "epub" ? `${progress.current} / ${progress.total}` : `${page + 1} / ${pages.length}`}
           </span>
         </div>
