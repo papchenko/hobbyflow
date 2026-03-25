@@ -72,8 +72,8 @@ const Footer = () => {
     <footer className={`pt-14 pb-8 border-t ${bgColor}`}>
       <div className="container mx-auto px-4">
 
-        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10"> */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-10"> */}
 
           {/* Brand */}
           <div>
@@ -121,7 +121,7 @@ const Footer = () => {
             </ul>
           </div>
           {/* Donate */}
-          <div>
+          {/* <div>
             <h4 className={`font-semibold mb-4 ${textColor}`}>Support Us</h4>
               <p className={`text-sm mb-0 ${textColor}`}>
                 Our project is constantly improving.  
@@ -132,14 +132,13 @@ const Footer = () => {
                 className="inline-block font-bold px-0 py-2 rounded-md transition text-gray-700 dark:text-white hover:text-[var(--accept-color)] dark:hover:text-[var(--accept-color)]">
                 Donate
               </button>
-          </div>
+          </div> */}
 
           {/* Contact */}
           <div>
             <h4 className={`font-semibold mb-4 ${textColor}`}>Contact</h4>
             <ul className="space-y-2 text-sm">
               <li className={textColor}>support@bookflow.com</li>
-              <li className={textColor}>Sumy, Ukraine</li>
             </ul>
 
             {/* <div className="flex gap-4 mt-4 text-lg">
