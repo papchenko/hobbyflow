@@ -138,7 +138,7 @@ const Footer = () => {
           <div>
             <h4 className={`font-semibold mb-4 ${textColor}`}>Contact</h4>
             <ul className="space-y-2 text-sm">
-              <li className={textColor}>support@bookflow.com</li>
+              <li className={textColor}>support@bookflow.guru</li>
             </ul>
 
             {/* <div className="flex gap-4 mt-4 text-lg">
