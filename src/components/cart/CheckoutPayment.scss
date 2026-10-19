@@ -1,0 +1,229 @@
+/* BookFlow — CheckoutPayment | visual styles only */
+.checkout-payment {
+  --checkout-surface: var(--header-bg, var(--card-bg, #fff));
+  --checkout-page: var(--card-bg, var(--bg-color, #f7f8fb));
+  --checkout-text: var(--text-color, #17202c);
+  --checkout-border: var(--border-color, rgba(120,130,150,.2));
+  --checkout-accent: var(--secondary-color, #c91499);
+  --checkout-accent-hover: var(--secondary-color-hover, var(--secondary-color, #b31088));
+  min-height: 100vh;
+  padding: clamp(100px, 11vw, 135px) 18px 76px;
+  background: var(--checkout-page);
+  color: var(--checkout-text);
+  transition: background .25s, color .25s;
+}
+.checkout-payment__panel {
+  width: min(100%, 760px);
+  margin-inline: auto;
+  padding: clamp(22px, 4vw, 42px);
+  border: 1px solid var(--checkout-border);
+  border-radius: 24px;
+  background: var(--checkout-surface);
+  color: var(--checkout-text);
+  box-shadow: 0 16px 54px rgba(0,0,0,.075);
+}
+.checkout-payment__panel > h2 {
+  margin: 0 0 30px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--checkout-border);
+  color: var(--checkout-text);
+  font-size: clamp(22px, 3.5vw, 30px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -.035em;
+  text-align: left;
+}
+.checkout-payment__panel > form { gap: 16px; }
+.checkout-payment__panel form > div:not(:has(input)) {
+  padding: 12px 14px;
+  border: 1px solid var(--checkout-border);
+  border-radius: 12px;
+  background: var(--checkout-page);
+  color: var(--checkout-text);
+  font-size: 12px;
+  line-height: 1.6;
+  opacity: .85;
+}
+.checkout-payment__panel form > div.text-red-500 {
+  color: #cf4964;
+  border-color: rgba(207,73,100,.25);
+  background: rgba(207,73,100,.055);
+  opacity: 1;
+}
+.checkout-payment__panel input,
+.checkout-payment__panel select {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 15px;
+  border: 1px solid var(--checkout-border);
+  border-radius: 12px;
+  outline: none;
+  background: var(--checkout-page);
+  color: var(--checkout-text);
+  font: inherit;
+  font-size: 14px;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.checkout-payment__panel input::placeholder { color: var(--checkout-text); opacity: .48; }
+.checkout-payment__panel input:focus,
+.checkout-payment__panel select:focus {
+  border-color: var(--checkout-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--checkout-accent) 15%, transparent);
+}
+.checkout-payment__panel select { cursor: pointer; color-scheme: light dark; }
+.checkout-payment__panel button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: transform .2s, filter .2s, box-shadow .2s;
+}
+.checkout-payment__panel button:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.06); }
+.checkout-payment__panel button:active:not(:disabled) { transform: translateY(0); }
+.checkout-payment__panel button:focus-visible { outline: 3px solid var(--checkout-accent); outline-offset: 3px; }
+.checkout-payment__panel button:disabled { opacity: .55; cursor: not-allowed; }
+.checkout-payment__panel form > button[type="submit"] {
+  margin-top: 8px;
+  width: 100%;
+  background: var(--checkout-accent);
+  color: #fff;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--checkout-accent) 20%, transparent);
+}
+/* Step 2: payment details */
+.checkout-payment__panel > div.flex.flex-col.items-center { align-items: stretch; gap: 18px; }
+.checkout-payment__panel > div.flex.flex-col.items-center > div:first-child {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid var(--checkout-border);
+  border-radius: 12px;
+  background: var(--checkout-page);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.checkout-payment__panel > div.flex.flex-col.items-center > div:first-child svg,
+.checkout-payment__panel > div.flex.flex-col.items-center > div.bg-black svg {
+  flex-shrink: 0;
+  color: var(--checkout-accent);
+  font-size: 17px;
+  transition: transform .2s;
+}
+.checkout-payment__panel > div.flex.flex-col.items-center svg.cursor-pointer:hover { transform: scale(1.12); }
+.checkout-payment__panel > div.flex.flex-col.items-center > p { color: var(--checkout-text); font-size: 14px; }
+.checkout-payment__panel > div.flex.flex-col.items-center > div.bg-black {
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid var(--checkout-border);
+  border-radius: 16px;
+  background: var(--checkout-page);
+  color: var(--checkout-text);
+}
+.checkout-payment__panel > div.flex.flex-col.items-center > div.bg-black span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: clamp(15px, 3vw, 20px) !important;
+  font-weight: 750;
+  letter-spacing: .09em !important;
+}
+.checkout-payment__panel > div.flex.flex-col.items-center > p.text-red-500 {
+  padding: 12px 14px;
+  border: 1px solid rgba(207,73,100,.24);
+  border-radius: 12px;
+  background: rgba(207,73,100,.06);
+  color: #d44965;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.checkout-payment__panel > div.flex.flex-col.items-center > button {
+  width: 100%;
+  background: var(--checkout-accent);
+  color: #fff;
+}
+/* Step 3: receipt */
+.checkout-payment__panel #receipt {
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid var(--checkout-border);
+  border-radius: 18px;
+  background: var(--checkout-page);
+  color: var(--checkout-text);
+  box-shadow: none;
+}
+.checkout-payment__panel #receipt > h3 {
+  margin-bottom: 22px;
+  color: var(--checkout-text);
+  font-size: clamp(20px, 3vw, 26px);
+  letter-spacing: -.03em;
+}
+.checkout-payment__panel #receipt > div.border {
+  padding: 18px;
+  border: 1px solid var(--checkout-border);
+  border-radius: 14px;
+  background: var(--checkout-surface);
+  color: var(--checkout-text);
+}
+.checkout-payment__panel #receipt > div.border p:last-child {
+  margin-top: 8px;
+  color: var(--checkout-accent);
+  font-size: clamp(16px, 3vw, 21px);
+  overflow-wrap: anywhere;
+}
+.checkout-payment__panel #receipt > p {
+  margin: 9px 0;
+  color: var(--checkout-text);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.checkout-payment__panel #receipt > div.mt-4 {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid var(--checkout-border);
+  border-radius: 14px;
+  background: var(--checkout-surface);
+}
+.checkout-payment__panel #receipt > div.mt-4 > div {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--checkout-border);
+}
+.checkout-payment__panel #receipt .text-gray-500 { color: var(--checkout-text); opacity: .6; }
+.checkout-payment__panel #receipt > p.mt-4.font-bold {
+  padding-top: 15px;
+  border-top: 1px solid var(--checkout-border);
+  color: var(--checkout-accent);
+  font-size: 21px;
+}
+.checkout-payment__panel #receipt > div.flex.gap-3 { flex-wrap: wrap; }
+.checkout-payment__panel #receipt > div.flex.gap-3 button { flex: 1 1 180px; }
+.checkout-payment__panel #receipt > div.flex.gap-3 button:first-child { background: var(--checkout-accent); color: #fff; }
+.checkout-payment__panel #receipt > div.flex.gap-3 button:last-child {
+  border-color: var(--checkout-border);
+  background: var(--checkout-surface);
+  color: var(--checkout-text);
+}
+@media (max-width: 560px) {
+  .checkout-payment { padding: 88px 12px 40px; }
+  .checkout-payment__panel { padding: 20px 16px; border-radius: 18px; }
+  .checkout-payment__panel > h2 { margin-bottom: 22px; padding-bottom: 17px; }
+  .checkout-payment__panel #receipt { padding: 15px; }
+  .checkout-payment__panel > div.flex.flex-col.items-center > div.bg-black { padding: 15px; }
+}
+@media print {
+  .checkout-payment { min-height: auto; padding: 0; background: #fff !important; color: #000 !important; }
+  .checkout-payment__panel { width: 100%; padding: 0; border: 0; box-shadow: none; background: #fff !important; }
+  .checkout-payment__panel > h2, .checkout-payment__panel #receipt button { display: none !important; }
+  .checkout-payment__panel #receipt { border: 0; background: #fff !important; color: #000 !important; }
+  .checkout-payment__panel #receipt * { color: #000 !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .checkout-payment, .checkout-payment * { transition: none !important; }
+}

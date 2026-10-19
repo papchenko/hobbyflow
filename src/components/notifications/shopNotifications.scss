@@ -1,0 +1,990 @@
+/* =========================================================
+   BACKDROP
+========================================================= */
+
+.shop-notifications-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999998;
+
+  background: rgba(0, 0, 0, 0.38);
+
+  animation: shopNotificationsBackdropIn 0.2s ease both;
+}
+
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
+.shop-notifications-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 999999;
+
+  width: min(430px, 34vw);
+  min-width: 360px;
+
+  height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  overflow: hidden;
+
+  background: #ffffff;
+
+  isolation: isolate;
+
+  border-left: 1px solid #e5e7eb;
+
+  box-shadow:
+    -12px 0 40px rgba(0, 0, 0, 0.14);
+
+  animation:
+    shopNotificationsDrawerIn
+    0.3s cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+
+/* =========================================================
+   DARK DRAWER
+========================================================= */
+
+.dark .shop-notifications-drawer {
+  background: #101214;
+
+  border-left-color: rgba(255, 255, 255, 0.055);
+
+  box-shadow:
+    -12px 0 40px rgba(0, 0, 0, 0.32);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.shop-notifications-header {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  width: 100%;
+  min-height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  padding: 14px 20px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .shop-notifications-header {
+//   background: #111416;
+background: #171e28;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.055);
+}
+
+
+/* =========================================================
+   HEADER CONTENT
+========================================================= */
+
+.shop-notifications-header-content {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+/* =========================================================
+   HEADER ICON
+========================================================= */
+
+.shop-notifications-header-icon {
+  flex: 0 0 42px;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(219, 50, 6, 0.08);
+
+  border:
+    1px solid rgba(219, 50, 6, 0.16);
+
+  border-radius: 12px;
+
+  color: var(--first-color, #db3206);
+
+  font-size: 19px;
+}
+
+
+/* =========================================================
+   HEADER TEXT
+========================================================= */
+
+.shop-notifications-header-content h4 {
+  margin: 0 0 3px;
+
+  color: #1f2937;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.dark .shop-notifications-header-content h4 {
+  color: #f1f3f3;
+}
+
+.shop-notifications-header-content span {
+  color: #6b7280;
+
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.dark .shop-notifications-header-content span {
+  color: #777e82;
+}
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+.shop-notifications-close {
+  flex: 0 0 auto;
+
+  width: 44px;
+  height: 44px;
+
+  margin-left: 12px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+
+  background: #f8fafc;
+
+  color: #6b7280;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.shop-notifications-close:hover {
+  background: #f1f5f9;
+
+  border-color: #d1d5db;
+
+  color: #111827;
+
+  transform: scale(1.04);
+}
+
+.dark .shop-notifications-close {
+  border-color:
+    rgba(255, 255, 255, 0.07);
+
+  background:
+    rgba(255, 255, 255, 0.04);
+
+  color: #a0a6a9;
+}
+
+.dark .shop-notifications-close:hover {
+  background:
+    rgba(255, 255, 255, 0.09);
+
+  border-color:
+    rgba(255, 255, 255, 0.12);
+
+  color: #fff;
+}
+
+.shop-notifications-close:active {
+  transform: scale(0.94);
+}
+
+.shop-notifications-close svg {
+  width: 24px;
+  height: 24px;
+
+  display: block;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.shop-notifications-body {
+  flex: 1 1 auto;
+
+  min-width: 0;
+  min-height: 0;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  padding: 16px;
+
+  background: #ffffff;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    #d1d5db
+    transparent;
+}
+
+.dark .shop-notifications-body {
+//   background: #101214;
+// background: var(--header-bg);
+background: #171e28;
+
+  scrollbar-color:
+    rgba(255, 255, 255, 0.12)
+    transparent;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.shop-notifications-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.shop-notifications-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.shop-notifications-body::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+
+  border-radius: 10px;
+}
+
+.shop-notifications-body::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.dark .shop-notifications-body::-webkit-scrollbar-thumb {
+  background:
+    rgba(255, 255, 255, 0.12);
+}
+
+.dark .shop-notifications-body::-webkit-scrollbar-thumb:hover {
+  background:
+    rgba(255, 255, 255, 0.2);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.shop-notifications-section {
+  width: 100%;
+
+  margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.shop-notifications-section-title {
+  width: 100%;
+  min-height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  box-sizing: border-box;
+
+  margin-bottom: 9px;
+  padding: 0 12px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  color: #374151;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+}
+
+.dark .shop-notifications-section-title {
+  background:
+    rgba(255, 255, 255, 0.035);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.055);
+
+  color: #d7dbdc;
+}
+
+.shop-notifications-section-title svg {
+  color: var(--first-color, #db3206);
+
+  font-size: 15px;
+}
+
+.shop-notifications-section-title.trade svg {
+  color: #d97706;
+}
+
+.dark .shop-notifications-section-title.trade svg {
+  color: #f59e0b;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.shop-notification-card {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+
+  padding: 14px;
+  margin-bottom: 8px;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f8fafc
+    );
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.shop-notification-card:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f1f5f9
+    );
+
+  border-color: #d1d5db;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+.dark .shop-notification-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  border:
+    1px solid rgba(255, 255, 255, 0.06);
+
+  box-shadow: none;
+}
+
+.dark .shop-notification-card:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.035)
+    );
+
+  border-color:
+    rgba(255, 255, 255, 0.1);
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   CARD ICON
+========================================================= */
+
+.shop-notification-card-icon {
+  flex: 0 0 40px;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  background: rgba(219, 50, 6, 0.08);
+
+  border:
+    1px solid rgba(219, 50, 6, 0.14);
+
+  border-radius: 11px;
+
+  color: var(--first-color, #db3206);
+
+  font-size: 17px;
+}
+.dark .shop-notification-card-icon {
+  background: rgba(84, 185, 234, 0.1);
+
+  border:
+    1px solid rgba(84, 184, 234, 0.43);
+
+  color: var(--first-color, #54b9ea);
+}
+
+.shop-notification-card-icon.trade {
+  background: rgba(245, 158, 11, 0.08);
+
+  border-color:
+    rgba(245, 158, 11, 0.14);
+
+  color: #d97706;
+}
+
+.dark .shop-notification-card-icon.trade {
+  color: #f59e0b;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.shop-notification-card-content {
+  flex: 1 1 auto;
+
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   TOP
+========================================================= */
+
+.shop-notification-card-top {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin-bottom: 7px;
+}
+
+.shop-notification-card-top strong {
+  flex: 1 1 auto;
+
+  min-width: 0;
+
+  color: #1f2937;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  line-height: 1.4;
+
+  word-break: break-word;
+}
+
+.dark .shop-notification-card-top strong {
+  color: #f0f2f2;
+}
+
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.shop-notification-badge {
+  flex: 0 0 auto;
+
+  padding: 4px 6px;
+
+  background: rgba(219, 50, 6, 0.08);
+
+  border:
+    1px solid rgba(219, 50, 6, 0.16);
+
+  border-radius: 5px;
+
+  color: var(--first-color, #db3206);
+
+  font-size: 7px;
+  font-weight: 700;
+
+  letter-spacing: 0.6px;
+
+  line-height: 1;
+}
+
+.shop-notification-badge.trade {
+  background: rgba(245, 158, 11, 0.08);
+
+  border-color:
+    rgba(245, 158, 11, 0.18);
+
+  color: #d97706;
+}
+
+.dark .shop-notification-badge.trade {
+  color: #f59e0b;
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.shop-notification-message {
+  display: block;
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  line-height: 1.55;
+
+  word-break: break-word;
+}
+
+.dark .shop-notification-message {
+  color: #92999d;
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.shop-notification-details {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin-top: 7px;
+}
+
+.shop-notification-details > div {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+.shop-notification-details span {
+  color: #6b7280;
+
+  font-size: 11px;
+}
+
+.dark .shop-notification-details span {
+  color: #777e82;
+}
+
+.shop-notification-details strong {
+  color: #374151;
+
+  font-size: 12px;
+
+  text-align: right;
+
+  text-transform: capitalize;
+}
+
+.dark .shop-notification-details strong {
+  color: #dfe2e3;
+}
+
+.shop-notification-details strong.price-original {
+  color: #16a34a;
+}
+
+.dark .shop-notification-details strong.price-original {
+  color: #4ade80;
+}
+
+.shop-notification-details strong.price-offer {
+  color: #ea580c;
+}
+
+.dark .shop-notification-details strong.price-offer {
+  color: #fb923c;
+}
+
+.shop-notification-details strong.status {
+  color: #4b5563;
+}
+
+.dark .shop-notification-details strong.status {
+  color: #d7dadd;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.shop-notification-actions {
+  display: flex;
+
+  gap: 8px;
+
+  margin-top: 12px;
+}
+
+.shop-notification-actions button {
+  flex: 1;
+
+  min-height: 34px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  color: #fff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.shop-notification-actions button:hover {
+  transform: translateY(-1px);
+}
+
+.shop-notification-actions button:active {
+  transform: translateY(0);
+}
+
+.shop-notification-actions .accept {
+  background: #16a34a;
+}
+
+.shop-notification-actions .accept:hover {
+  background: #15803d;
+}
+
+.shop-notification-actions .reject {
+  background: #dc2626;
+}
+
+.shop-notification-actions .reject:hover {
+  background: #b91c1c;
+}
+
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+.shop-notification-checkout {
+  width: 100%;
+
+  min-height: 36px;
+
+  margin-top: 12px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: #16a34a;
+
+  color: #fff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.shop-notification-checkout:hover {
+  background: #15803d;
+
+  transform: translateY(-1px);
+}
+
+.shop-notification-checkout:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.shop-notifications-empty {
+  width: 100%;
+
+  min-height: 320px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  padding: 40px 24px;
+
+  text-align: center;
+}
+
+.shop-notifications-empty-icon {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  background: #f8fafc;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 16px;
+
+  color: #9ca3af;
+
+  font-size: 24px;
+}
+
+.dark .shop-notifications-empty-icon {
+  background:
+    rgba(255, 255, 255, 0.04);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.06);
+
+  color: #70777b;
+}
+
+.shop-notifications-empty h4 {
+  margin: 0 0 7px;
+
+  color: #1f2937;
+
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.dark .shop-notifications-empty h4 {
+  color: #e8ebeb;
+}
+
+.shop-notifications-empty p {
+  max-width: 280px;
+
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+.dark .shop-notifications-empty p {
+  color: #686e72;
+}
+/* =========================================================
+   MOBILE — FULL SCREEN
+========================================================= */
+
+@media (max-width: 768px) {
+  .shop-notifications-backdrop {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .shop-notifications-drawer {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+
+    height: 100%;
+    min-height: 100dvh;
+    max-height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+    border-radius: 0;
+
+    box-shadow: none;
+
+    overflow: hidden;
+
+    animation:
+      shopNotificationsDrawerMobileIn
+      0.3s cubic-bezier(0.22, 1, 0.36, 1)
+      both;
+  }
+
+  .shop-notifications-header {
+    width: 100%;
+
+    min-height: 68px;
+
+    padding:
+      max(12px, env(safe-area-inset-top))
+      16px
+      12px;
+  }
+
+  .shop-notifications-body {
+    width: 100%;
+
+    padding: 12px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .shop-notification-card {
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 13px;
+  }
+}
+
+.shop-notification-card-icon--image {
+  padding: 0;
+  overflow: hidden;
+}
+
+.shop-notification-card-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.shop-notification-card-icon--image {
+  padding: 0;
+  overflow: hidden;
+}
+
+.shop-notification-card-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}

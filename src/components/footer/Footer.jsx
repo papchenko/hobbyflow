@@ -1,17 +1,17 @@
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { FaYoutube } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { supabase } from "../../supabase";
-import logoImg from "../../assets/logo.svg";
-import DonateModal from "../pages/home/DonateModal";
-import { openDonateModal, closeDonateModal } from "../../store/footerSlice";
+import logoImg from "../../assets/logo.png";
+import { color } from "framer-motion";
 
 const Footer = () => {
   const { theme } = useTheme();
   const isDonateOpen = useSelector((state) => state.footer.isDonateOpen);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const textColor =
     theme === "light" ? "text-gray-600" : "text-gray-400";
@@ -23,10 +23,10 @@ const Footer = () => {
     theme === "light" ? "hover:text-gray-900" : "hover:text-white";
 
   const quickLinks = [
-    { label: "Home", path: "/" },
-    { label: "Books", path: "/books" },
-    { label: "Takers", path: "/takers" },
-    { label: "About", path: "/about" },
+    { label: "Help Center", path: "/help-page" },
+    // { label: "Books", path: "/books" },
+    // { label: "Takers", path: "/takers" },
+    // { label: "About", path: "/about" },
   ];
 
   const legalLinks = [
@@ -77,14 +77,18 @@ const Footer = () => {
 
           {/* Brand */}
           <div>
-            <img src={logoImg} alt="Logo" className="w-10 mb-3 dark:invert" />
-            <h3 className={`font-semibold text-lg mb-3 ${textColor}`}>
-              Sale and Lending of Books
+            <img src={logoImg} alt="Logo" className="w-[58px] mb-2 dark:invert" />
+            <h3 className={`font-semibold text-lg mb-1 ${textColor}`}>
+              Sale and Lending Marketplace
             </h3>
             <p className={`${textColor} text-sm leading-relaxed`}>
-              A platform for discovering, sharing and exploring books.
-              Built for readers who value simplicity and clean experience.
+              All rights reserved. This website and its software are proprietary and protected by applicable copyright, trademark, and intellectual property laws. 
             </p>
+            <p className={`${textColor} text-sm leading-relaxed pt-1 hover:text-gray-900 dark:hover:text-white`}><NavLink
+                to="/info"
+                >
+                Info & Updates
+              </NavLink></p>
           </div>
 
           {/* Navigation */}
@@ -120,25 +124,12 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-          {/* Donate */}
-          {/* <div>
-            <h4 className={`font-semibold mb-4 ${textColor}`}>Support Us</h4>
-              <p className={`text-sm mb-0 ${textColor}`}>
-                Our project is constantly improving.  
-                Your support helps us grow!
-              </p>
-              <button
-                onClick={() => dispatch(openDonateModal())}
-                className="inline-block font-bold px-0 py-2 rounded-md transition text-gray-700 dark:text-white hover:text-[var(--accept-color)] dark:hover:text-[var(--accept-color)]">
-                Donate
-              </button>
-          </div> */}
 
           {/* Contact */}
           <div>
             <h4 className={`font-semibold mb-4 ${textColor}`}>Contact</h4>
             <ul className="space-y-2 text-sm">
-              <li className={textColor}>support@bookflow.guru</li>
+              <li className={textColor}>support@hobbyflow.guru</li>
             </ul>
 
             {/* <div className="flex gap-4 mt-4 text-lg">
@@ -182,10 +173,9 @@ const Footer = () => {
         </div>
 
         <div className={`mt-12 pt-6 border-t text-center text-sm ${textColor}`}>
-          © {new Date().getFullYear()} BookFlow. All rights reserved.
+          © {new Date().getFullYear()} HobbyFlow
         </div>
       </div>
-    <DonateModal isOpen={isDonateOpen} setIsOpen={() => dispatch(closeDonateModal())} />
     </footer>
   );
 };

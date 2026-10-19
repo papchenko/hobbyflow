@@ -40,9 +40,26 @@ const SellerOrdersPage = () => {
         <p>No orders accepted</p>
       ) : (
         <div className="flex flex-col gap-4">
-          {orders.map(order => (
-            <div
-              key={order.id}
+          {orders.map((order) => {
+  const orderItems = [
+    ...(order.bookItems || []),
+    ...(order.comicItems || []),
+    ...(order.items || []),
+  ];
+
+  const hasRental = orderItems.some(
+    (item) => item.purchaseType === "rental"
+  );
+
+  const hasSale = orderItems.some(
+    (item) =>
+      item.purchaseType !== "rental" &&
+      !item.isTrade
+  );
+
+  return (
+    <div
+      key={order.id}
               className="border p-3 rounded hover:shadow cursor-pointer"
               onClick={() => navigate(`/orders/${order.id}`)}
             >
@@ -50,8 +67,27 @@ const SellerOrdersPage = () => {
               <p><b>Buyer:</b> {order.shipping?.fullName}</p>
               <p><b>Sum:</b> {order.total}₴</p>
               <p><b>Status:</b> Accepted</p>
+              {(hasRental || hasSale) && (
+  <p>
+    <b>Order type:</b>{" "}
+    {hasRental && hasSale
+      ? "Sale + rental"
+      : hasRental
+        ? "Rental"
+        : "Sale"}
+  </p>
+)}
+              {order.tradeCompleted && (
+  <div className="mt-2">
+    <span className="px-2 py-1 bg-green-600 text-white rounded text-xs">
+      Trade completed
+    </span>
+  </div>
+)}
             </div>
-          ))}
+           );
+})}
+          
         </div>
       )}
     </div>

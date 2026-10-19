@@ -4,15 +4,12 @@
 
 :root {
   --card-bg: white;
-  --text-color: #1f2937;
-  --border-color: #d1d5db;
-  --bg-color: white;
   --header-bg: white;
 
   --primary-color: #c5229a;
   --secondary-color: #c91499;
   --secondary-color-hover: #d341ac;
-
+  
   --info-color: #9381ff;
   --info-color-hover: #8676e1;
 
@@ -21,18 +18,33 @@
 
   --reject-color: #00509d;
   --reject-color-hover: rgb(205, 146, 157);
+
+  --bg-color: #f6f8fa;
+  --text-color: #17212b;
+  --border-color: #d9e0e7;
+  --bg-elevated: #ffffff;
 }
 
-.dark {
-  --card-bg: #374151;
-  --text-color: #f3f4f6;
-  --border-color: #4b5563;
-  --bg-color: #4b5563;
-  --header-bg: #1f2937;
+ .dark {
+   --card-bg: #374151;
+   --header-bg: #1f2937;
+   /* --bg-color: #0b1016; */
+   --bg-color: #0b101677;
+   --text-color: #f3f4f6;
+   --border-color: #283442;
+   --bg-elevated: #121a23;
+   
+   --accept-color: #54b9ea;
+   --secondary-color-hover: #1798d8;
+   --accept-color-hover: #1798d8;
+  --primary-color: #54b9ea;
+  --secondary-color: #54b9ea;
+  /* 5e60ce d8572a 3a769e */
 }
 body {
   @apply transition-colors duration-200;
   position: relative !important;
+  /* background: #111827 !important; */
 }
 
 /* Custom scrollbar */
@@ -210,3 +222,34 @@ body {
   transition: transform 0.1s linear;
 } */
 /* stories progress */
+
+.Toastify__toast {
+  color: white;
+  background: var(--primary-color);
+  border-radius: 12px;
+  width: 100%;
+  min-height: 50px;
+}
+@media (max-width: 768px) {
+  .Toastify__toast {
+    width: 70%;
+    top: 10px;
+  }
+}
+.Toastify__close-button {
+  display: none;
+}
+.Toastify__toast-body {
+  margin-left: 0;
+}
+
+html, body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge old */
+  touch-action: pan-x pan-y;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}

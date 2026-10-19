@@ -1,0 +1,511 @@
+/* =========================================================
+   BOOKFLOW CLUB
+   LIGHT / DARK THEME
+========================================================= */
+
+.bookflow-club {
+  position: relative;
+
+  min-height: 100vh;
+
+  padding: 150px 0 80px;
+
+  overflow: hidden;
+
+  background: var(--bg-color);
+  color: var(--text-color);
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.bookflow-club__container {
+  position: relative;
+  z-index: 1;
+
+  width: min(1200px, calc(100% - 32px));
+
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.bookflow-club__hero {
+  max-width: 760px;
+
+  margin: 0 auto 55px;
+
+  text-align: center;
+}
+
+.bookflow-club__hero-icon {
+  width: 62px;
+  height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 18px;
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--secondary-color) 25%,
+      var(--border-color)
+    );
+
+  border-radius: 17px;
+
+  color: var(--secondary-color);
+
+  font-size: 23px;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.06);
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.bookflow-club__label {
+  display: block;
+
+  margin-bottom: 11px;
+
+  color: var(--secondary-color);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.bookflow-club__hero h1 {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: clamp(38px, 6vw, 62px);
+
+  line-height: 1.04;
+
+  font-weight: 800;
+
+  letter-spacing: -0.045em;
+
+  transition: color 0.25s ease;
+}
+
+.bookflow-club__hero h1 span {
+  color: var(--secondary-color);
+
+  transition: color 0.25s ease;
+}
+
+.bookflow-club__hero p {
+  max-width: 620px;
+
+  margin: 19px auto 0;
+
+  color: var(--text-color);
+
+  opacity: 0.52;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* =========================================================
+   SECTIONS GRID
+========================================================= */
+
+.bookflow-club__sections {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.bookflow-club__card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 285px;
+
+  padding: 24px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 22px;
+
+  background: var(--header-bg);
+
+  color: var(--text-color);
+
+  text-decoration: none;
+
+}
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.bookflow-club__card-top {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/* =========================================================
+   CARD ICON
+========================================================= */
+
+.bookflow-club__card-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--secondary-color) 15%,
+      var(--border-color)
+    );
+
+  border-radius: 14px;
+
+  background: color-mix(
+    in srgb,
+    var(--secondary-color) 8%,
+    var(--bg-color)
+  );
+
+  color: var(--secondary-color);
+
+  font-size: 18px;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.bookflow-club__card:hover .bookflow-club__card-icon {
+  transform: scale(1.04);
+
+  background: var(--secondary-color);
+
+  border-color: var(--secondary-color);
+
+  color: #fff;
+}
+@media (max-width: 768px) {
+
+  .bookflow-club__card-icon {
+    margin-bottom: 12px;
+  }
+}
+/* =========================================================
+   TOP ARROW
+========================================================= */
+
+.bookflow-club__card-arrow {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 50%;
+
+  background: var(--bg-color);
+
+  color: var(--text-color);
+
+  opacity: 0.45;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.bookflow-club__card:hover
+  .bookflow-club__card-arrow {
+  background: var(--secondary-color);
+
+  border-color: var(--secondary-color);
+
+  color: #fff;
+
+  opacity: 1;
+
+  transform: translateX(2px);
+}
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.bookflow-club__card-content {
+  position: relative;
+
+  z-index: 1;
+
+  margin-top: auto;
+}
+
+.bookflow-club__card-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--secondary-color);
+
+  font-size: 9px;
+
+  font-weight: 750;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  opacity: 0.85;
+}
+
+.bookflow-club__card h2 {
+  margin: 0 0 8px;
+
+  color: var(--text-color);
+
+  font-size: 25px;
+
+  line-height: 1.1;
+
+  font-weight: 800;
+
+  letter-spacing: -0.025em;
+
+  transition: color 0.25s ease;
+}
+
+.bookflow-club__card p {
+  max-width: 320px;
+
+  margin: 0;
+
+  color: var(--text-color);
+
+  opacity: 0.48;
+
+  font-size: 12px;
+
+  line-height: 1.65;
+
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* =========================================================
+   CARD FOOTER
+========================================================= */
+
+.bookflow-club__card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 22px;
+
+  padding-top: 14px;
+
+  border-top: 1px solid var(--border-color);
+
+  color: var(--text-color);
+
+  opacity: 0.42;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.bookflow-club__card-footer svg {
+  font-size: 9px;
+
+  transition: transform 0.25s ease;
+}
+
+.bookflow-club__card:hover
+  .bookflow-club__card-footer {
+  color: var(--secondary-color);
+
+  opacity: 1;
+}
+
+.bookflow-club__card:hover
+  .bookflow-club__card-footer svg {
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+.dark .bookflow-club {
+  background: var(--bg-color);
+
+  .bookflow-club__card:hover {
+    box-shadow:
+      0 25px 65px rgba(0, 0, 0, 0.36),
+      0 0 0 1px
+        rgba(84, 185, 234, 0.08);
+  }
+
+  .bookflow-club__hero-icon {
+    box-shadow:
+      0 15px 40px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+  .bookflow-club__sections {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .bookflow-club__card:last-child {
+    grid-column: span 2;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+  .bookflow-club {
+    padding: 100px 0 50px;
+  }
+
+  .bookflow-club__container {
+    width: min(
+      100% - 24px,
+      520px
+    );
+  }
+
+  .bookflow-club__hero {
+    margin-bottom: 35px;
+  }
+
+  .bookflow-club__hero-icon {
+    width: 55px;
+    height: 55px;
+
+    margin-bottom: 15px;
+
+    border-radius: 15px;
+
+    font-size: 20px;
+  }
+
+  .bookflow-club__hero h1 {
+    font-size: 38px;
+  }
+
+  .bookflow-club__hero p {
+    font-size: 13px;
+  }
+
+  .bookflow-club__sections {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .bookflow-club__card:last-child {
+    grid-column: auto;
+  }
+
+  .bookflow-club__card {
+    min-height: 230px;
+
+    padding: 20px;
+
+    border-radius: 18px;
+  }
+
+  .bookflow-club__card h2 {
+    font-size: 23px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+  .bookflow-club {
+    padding-top: 90px;
+  }
+
+  .bookflow-club__hero h1 {
+    font-size: 34px;
+  }
+
+  .bookflow-club__hero p {
+    font-size: 12px;
+  }
+
+  .bookflow-club__card {
+    min-height: 215px;
+  }
+}

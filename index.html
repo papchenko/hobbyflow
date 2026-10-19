@@ -2,18 +2,63 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="apple-mobile-web-app-title" content="BookFlow" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="HobbyFlow" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/logo.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <title>BookFlow Sale and Lending of Books</title>
+    <title>HobbyFlow</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/index.jsx"></script>
+<script>
+  ["gesturestart", "gesturechange", "gestureend"].forEach((eventName) => {
+    document.addEventListener(
+      eventName,
+      (event) => {
+        event.preventDefault();
+      },
+      { passive: false }
+    );
+  });
+
+  document.addEventListener(
+    "touchmove",
+    (event) => {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    },
+    { passive: false }
+  );
+
+  let lastTouchEnd = 0;
+
+  document.addEventListener(
+    "touchend",
+    (event) => {
+      const now = Date.now();
+
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+
+      lastTouchEnd = now;
+    },
+    { passive: false }
+  );
+
+  document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
+
+  document.addEventListener("dragstart", (event) => {
+    event.preventDefault();
+  });
+</script>
   </body>
 </html>

@@ -1,5 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { FaCheck } from "react-icons/fa6";
+import {
+  FaCheck,
+  FaArrowRight,
+  FaShieldAlt,
+  FaBolt,
+} from "react-icons/fa";
+
+import "./GetTakersPremium.scss";
 
 const GetTakersPremium = () => {
   const navigate = useNavigate();
@@ -17,40 +24,83 @@ const GetTakersPremium = () => {
     });
   };
 
-  return (
-    <div className="py-12 bg-gradient-to-br
-        from-[#e0f2fe]
-        via-[#bae6fd]
-        to-[#7dd3fc]
+  const features = [
+    "Ability to create sales posts",
+    "Visible in Takers page",
+    "Access to Wishlist",
+  ];
 
-        dark:bg-gradient-to-br
-        dark:from-[#111018]
-        dark:via-[#1b1a2b]
-        dark:to-[#1c2a3a] 
-        
-        text-gray-600 dark:text-white">
-    <div className="max-w-3xl mx-auto p-8 text-center text-gray-800 dark:text-white">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
-        Become a <span className="text-[var(--secondary-color)]">Taker Premium</span>
-      </h2>
-      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
-        <h3 className="text-xl font-semibold mb-4">
-          Premium Access — 30 Days
-        </h3>
-        <ul className="text-gray-600 dark:text-gray-300 space-y-2 mb-4">
-          <li className="flex flex-row justify-center items-center gap-3"><FaCheck /> <p>Ability to create sales posts</p></li>
-          <li className="flex flex-row justify-center items-center gap-3"><FaCheck /> <p>Visible in Takers page</p></li>
-          <li className="flex flex-row justify-center items-center gap-3"><FaCheck /> <p>Access to Wishlist</p></li>
-        </ul>
-        <div className="text-3xl font-bold mb-4">99 ₴</div>
-        <button
-          onClick={handleBuyPremium}
-          className="px-6 py-3 bg-[var(--secondary-color)] text-white rounded-xl hover:opacity-90 transition"
-        >
-          Get Premium
-        </button>
+  return (
+    <div className="takers-premium">
+      <div className="takers-premium__container">
+        <div className="takers-premium__card">
+
+          {/* Card Header */}
+          <div className="takers-premium__card-header">
+            <div>
+              <span>Premium access</span>
+              <h2>30 Days</h2>
+            </div>
+
+            <div className="takers-premium__popular">
+              Premium
+            </div>
+          </div>
+
+          {/* Price */}
+          <div className="takers-premium__price">
+            <span>99</span>
+            <small>₴</small>
+          </div>
+
+          <p className="takers-premium__price-caption">
+            One-time payment · 30 days access
+          </p>
+
+          {/* Features */}
+          <div className="takers-premium__features">
+            <div className="takers-premium__features-title">
+              <span>What's included</span>
+            </div>
+
+            <ul>
+              {features.map((feature) => (
+                <li key={feature}>
+                  <span className="takers-premium__check">
+                    <FaCheck />
+                  </span>
+
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* CTA */}
+          <button
+            type="button"
+            onClick={handleBuyPremium}
+            className="takers-premium__button"
+          >
+            <span>Get Premium</span>
+            <FaArrowRight />
+          </button>
+
+          {/* Trust */}
+          <div className="takers-premium__trust">
+            <div>
+              <FaShieldAlt />
+              <span>Secure payment</span>
+            </div>
+
+            <div>
+              <FaBolt />
+              <span>Instant access</span>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
     </div>
   );
 };

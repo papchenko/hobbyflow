@@ -3,11 +3,10 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
-import { toast } from "react-toastify";
-
-import { GiWhiteBook } from "react-icons/gi";
-import { FaPerson } from "react-icons/fa6";
+import { BsFileImage } from "react-icons/bs";
+import { FaBook, FaDice, FaPerson } from "react-icons/fa6";
 import { BiCategoryAlt } from "react-icons/bi";
+import { SiBookstack } from "react-icons/si";
 
 const GlobalSearch = () => {
   const [queryText, setQueryText] = useState("");
@@ -20,13 +19,35 @@ const GlobalSearch = () => {
   const navigate = useNavigate();
 
   const allGenres = [
-    "Fantasy","Science Fiction","Drama","Romance","Mystery",
-    "Detective","Thriller","Horror","Historical","Adventure",
-    "Dystopian","Post-Apocalyptic","Magical Realism","Cyberpunk",
-    "Biography","Self-Help","History","Philosophy","Psychology",
-    "Crime Fiction","Business","Science & Technology",
-    "Health & Fitness","Travel","Children’s","Young Adult",
-    "Educational","Poetry","Comics"
+    "Fantasy",
+    "Science Fiction",
+    "Drama",
+    "Romance",
+    "Mystery",
+    "Detective",
+    "Thriller",
+    "Horror",
+    "Historical",
+    "Adventure",
+    "Dystopian",
+    "Post-Apocalyptic",
+    "Magical Realism",
+    "Cyberpunk",
+    "Biography",
+    "Self-Help",
+    "History",
+    "Philosophy",
+    "Psychology",
+    "Crime Fiction",
+    "Business",
+    "Science & Technology",
+    "Health & Fitness",
+    "Travel",
+    "Children’s",
+    "Young Adult",
+    "Educational",
+    "Poetry",
+    "Comics",
   ];
 
   useEffect(() => {
@@ -40,46 +61,108 @@ const GlobalSearch = () => {
       const text = queryText.toLowerCase();
 
       try {
-
         const booksSnap = await getDocs(collection(db, "books"));
 
         const books = booksSnap.docs
-          .map(d => ({ id: d.id, type: "book", ...d.data() }))
-          .filter(b =>
-            b.name?.toLowerCase().includes(text)
-          )
+          .map((d) => ({ id: d.id, type: "book", ...d.data() }))
+          .filter((b) => b.name?.toLowerCase().includes(text))
           .slice(0, 5);
 
         const usersSnap = await getDocs(collection(db, "users"));
 
         const sellers = usersSnap.docs
-          .map(d => {
+          .map((d) => {
             const data = d.data();
             return {
               id: d.id,
               type: "seller",
               name: data.name || "",
               taker: data.taker,
-              ...data
+              ...data,
             };
           })
-          .filter(u =>
-            u.taker === true &&
-            u.name &&
-            u.name.toLowerCase().includes(text)
+          .filter(
+            (u) =>
+              u.taker === true && u.name && u.name.toLowerCase().includes(text),
           )
           .slice(0, 5);
 
-        const genres = allGenres
-          .filter(g => g.toLowerCase().includes(text))
-          .slice(0, 5)
-          .map(g => ({ id: g, type: "genre", name: g }));
+        const collectionsSnap = await getDocs(
+          collection(db, "bookCollections"),
+        );
 
-        const combined = [...books, ...sellers, ...genres];
+        const bookCollections = collectionsSnap.docs
+          .map((d) => {
+            const data = d.data();
+
+            return {
+              id: d.id,
+              type: "collection",
+              name: data.collectionName || "",
+              collectionName: data.collectionName || "",
+              seriesName: data.seriesName || "",
+              ...data,
+            };
+          })
+          .filter((c) => (c.collectionName || "").toLowerCase().includes(text))
+          .slice(0, 5);
+// ==========================================
+// SEARCH COMICS
+// ==========================================
+
+const comicsSnap = await getDocs(
+  collection(db, "comics")
+);
+
+const comics = comicsSnap.docs
+  .map((d) => ({
+    ...d.data(),
+    id: d.id,
+    type: "comic",
+  }))
+  .filter((comic) =>
+    (comic.name || "")
+      .toLowerCase()
+      .includes(text)
+  )
+  .slice(0, 5);
+
+// ==========================================
+// SEARCH BOARD GAMES
+// ==========================================
+
+const boardGamesSnap = await getDocs(
+  collection(db, "boardGames")
+);
+
+const boardGames = boardGamesSnap.docs
+  .map((d) => ({
+    ...d.data(),
+    id: d.id,
+    type: "boardGame",
+  }))
+  .filter((game) =>
+    (game.name || "")
+      .toLowerCase()
+      .includes(text)
+  )
+  .slice(0, 5);
+        const genres = allGenres
+          .filter((g) => g.toLowerCase().includes(text))
+          .slice(0, 5)
+          .map((g) => ({ id: g, type: "genre", name: g }));
+
+        const combined = [
+  ...books,
+  ...bookCollections,
+  ...comics,
+  ...boardGames,
+  ...sellers,
+  ...genres,
+];
 
         setResults(combined);
         setDropdownVisible(combined.length > 0);
-
       } catch (error) {
         console.error("Search error:", error);
         if (dropdownVisible) setDropdownVisible(false);
@@ -100,40 +183,38 @@ const GlobalSearch = () => {
         left: rect.left,
         width: rect.width,
         maxWidth: "95vw",
-        zIndex: 9999
+        zIndex: 9999,
       });
     }
   }, [dropdownVisible]);
 
-  const handleClick = async (item) => {
-    if (item.type === "book") {
-      navigate(`/books?bookId=${item.id}`);
-    }
+const handleClick = (item) => {
+  if (item.type === "book") {
+    navigate(`/books?bookId=${item.id}`);
+  }
 
-    if (item.type === "seller") {
-      navigate(`/takers/${item.id}`);
-    }
+  if (item.type === "seller") {
+    navigate(`/takers/${item.id}`);
+  }
 
-    // if (item.type === "genre") {
-    //   const q = query(
-    //     collection(db, "books"),
-    //     where("genre", "==", item.name)
-    //   );
+  if (item.type === "collection") {
+    navigate(`/book-collections?collectionId=${item.id}`);
+  }
 
-    //   const snap = await getDocs(q);
+  if (item.type === "comic") {
+    navigate(`/comics?comicId=${encodeURIComponent(item.id)}`);
+  }
 
-    //   if (!snap.empty) {
-    //     navigate(`/books?genre=${item.name}`);
-    //   } else {
-    //     toast.info("No books with this genre");
-    //   }
-    // }
-    if (item.type === "genre") {
-      navigate(`/books?genre=${encodeURIComponent(item.name)}`);
-    }
+  if (item.type === "boardGame") {
+    navigate(`/board-games?boardGameId=${encodeURIComponent(item.id)}`);
+  }
 
-    clearSearch();
-  };
+  if (item.type === "genre") {
+    navigate(`/books?genre=${encodeURIComponent(item.name)}`);
+  }
+
+  clearSearch();
+};
 
   const clearSearch = () => {
     setQueryText("");
@@ -142,40 +223,38 @@ const GlobalSearch = () => {
     inputRef.current?.focus();
   };
 
-    useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event) => {
-        const clickedOutsideInput =
-        containerRef.current &&
-        !containerRef.current.contains(event.target);
+      const clickedOutsideInput =
+        containerRef.current && !containerRef.current.contains(event.target);
 
-        const clickedOutsideDropdown =
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target);
+      const clickedOutsideDropdown =
+        dropdownRef.current && !dropdownRef.current.contains(event.target);
 
-        if (clickedOutsideInput && clickedOutsideDropdown) {
+      if (clickedOutsideInput && clickedOutsideDropdown) {
         setDropdownVisible(false);
-        }
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("touchstart", handleClickOutside);
 
     return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-        document.removeEventListener("touchstart", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
-    }, []);
+  }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     const handleEsc = (e) => {
-        if (e.key === "Escape") {
+      if (e.key === "Escape") {
         setDropdownVisible(false);
-        }
+      }
     };
 
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
-    }, []);
+  }, []);
 
   return (
     <>
@@ -186,7 +265,7 @@ const GlobalSearch = () => {
           value={queryText}
           onChange={(e) => setQueryText(e.target.value)}
           onFocus={() => results.length && setDropdownVisible(true)}
-          placeholder="Search books, sellers, genre..."
+          placeholder="Search HobbyFlow..."
           className="w-full border rounded px-3 py-2 pr-8"
         />
         {queryText && (
@@ -206,10 +285,9 @@ const GlobalSearch = () => {
                 active:scale-90
                 transition
                 dark:hover:text-white
-            "
-            >
+            ">
             ✕
-            </div>
+          </div>
         )}
       </div>
 
@@ -220,24 +298,27 @@ const GlobalSearch = () => {
             style={dropdownStyle}
             className="bg-white dark:bg-gray-800 border border-gray-200 
                        dark:border-gray-700 rounded-md shadow-lg 
-                       max-h-80 overflow-y-auto"
-          >
-            {results.map(item => (
+                       max-h-80 overflow-y-auto">
+            {results.map((item) => (
               <div
                 key={`${item.type}-${item.id}`}
                 onClick={() => handleClick(item)}
                 className="px-3 py-2 hover:bg-gray-100 
                            dark:hover:bg-gray-700 cursor-pointer 
-                           text-sm flex items-center gap-2 text-gray-700 dark:text-white"
-              >
-                {item.type === "book" && <GiWhiteBook />}
-                {item.type === "seller" && <FaPerson />}
-                {item.type === "genre" && <BiCategoryAlt />}
+                           text-sm flex items-center gap-2 text-gray-700 dark:text-white">
+                {item.type === "book" && <FaBook />}
+{item.type === "collection" && <SiBookstack />}
+{item.type === "comic" && <BsFileImage />}
+{item.type === "boardGame" && (
+  <FaDice />
+)}
+{item.type === "seller" && <FaPerson />}
+{item.type === "genre" && <BiCategoryAlt />}
                 {item.name}
               </div>
             ))}
           </div>,
-          document.body
+          document.body,
         )}
     </>
   );

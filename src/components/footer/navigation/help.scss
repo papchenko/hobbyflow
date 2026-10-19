@@ -1,0 +1,2282 @@
+/* =========================================================
+   BOOKFLOW HELP PAGE
+========================================================= */
+
+.help-page {
+  position: relative;
+
+  min-height: 100vh;
+
+  overflow: hidden;
+
+  padding-bottom: 90px;
+
+  background: var(--bg-color);
+  color: var(--text-color);
+
+  font-family: inherit;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+/* =========================================================
+   TECH GRID
+========================================================= */
+
+.help-page::after {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  z-index: 0;
+
+  // background-image:
+  //   linear-gradient(
+  //     rgba(197, 34, 154, 0.025) 1px,
+  //     transparent 1px
+  //   ),
+  //   linear-gradient(
+  //     90deg,
+  //     rgba(197, 34, 154, 0.025) 1px,
+  //     transparent 1px
+  //   );
+
+  background-size: 55px 55px;
+
+  // mask-image: linear-gradient(
+  //   to bottom,
+  //   rgba(0, 0, 0, 0.4),
+  //   transparent 75%
+  // );
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.help-hero {
+  position: relative;
+
+  z-index: 1;
+
+  min-height: 510px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 120px 20px 100px;
+
+  overflow: hidden;
+
+  text-align: center;
+
+  // background:
+  //   radial-gradient(
+  //     circle at 50% 35%,
+  //     color-mix(
+  //       in srgb,
+  //       var(--secondary-color) 11%,
+  //       transparent
+  //     ),
+  //     transparent 38%
+  //   ),
+  //   var(--bg-color);
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Hero glow */
+
+.help-hero__glow {
+  position: absolute;
+
+  width: 320px;
+  height: 320px;
+
+  border-radius: 50%;
+
+  // background: color-mix(
+  //   in srgb,
+  //   var(--secondary-color) 10%,
+  //   transparent
+  // );
+
+  filter: blur(90px);
+
+  pointer-events: none;
+}
+
+.help-hero__glow--one {
+  top: -180px;
+  left: 8%;
+}
+
+.help-hero__glow--two {
+  right: 5%;
+  bottom: -200px;
+
+  opacity: 0.6;
+}
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.help-hero__content {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(850px, 100%);
+
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HERO LOGO
+========================================================= */
+
+.help-hero__logo {
+  width: 74px;
+  height: 74px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 22px;
+
+  // border: 1px solid
+  //   color-mix(
+  //     in srgb,
+  //     var(--secondary-color) 22%,
+  //     var(--border-color)
+  //   );
+
+  // border-radius: 20px;
+
+  // background:
+  // linear-gradient(
+  //   145deg,
+  //   color-mix(
+  //     in srgb,
+  //     var(--secondary-color) 11%,
+  //     var(--card-bg)
+  //   ),
+  //   var(--card-bg)
+  // );
+
+  // color: var(--secondary-color);
+
+  font-size: 28px;
+
+  // box-shadow:
+  //   0 15px 35px
+  //     color-mix(
+  //       in srgb,
+  //       var(--secondary-color) 12%,
+  //       transparent
+  //     );
+}
+
+.help-hero__logo svg {
+  display: block;
+}
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.help-hero__eyebrow {
+  margin-bottom: 15px;
+
+  color: var(--secondary-color);
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.18em;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.help-hero h1 {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: clamp(3.2rem, 8vw, 6.1rem);
+
+  line-height: 0.92;
+
+  font-weight: 850;
+
+  letter-spacing: -0.065em;
+}
+
+.help-hero h1 span {
+  color: var(--secondary-color);
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.help-hero p {
+  width: min(680px, 100%);
+
+  margin: 25px auto 0;
+
+  color: var(--text-color);
+
+  font-size: 0.95rem;
+
+  line-height: 1.8;
+
+  opacity: 0.58;
+}
+
+/* =========================================================
+   HERO FEATURE LIST
+========================================================= */
+
+.help-hero__features {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  margin-top: 27px;
+}
+
+.help-hero__features span {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 8px 11px;
+
+  background: var(--card-bg);
+
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+
+  color: var(--text-color);
+
+  font-size: 11px;
+  font-weight: 600;
+
+  opacity: 0.75;
+}
+
+.help-hero__features svg {
+  color: var(--secondary-color);
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.help-container {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(1120px, calc(100% - 40px));
+
+  margin: 0 auto;
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.help-section {
+  position: relative;
+
+  padding-top: 105px;
+}
+
+.help-section--last {
+  padding-bottom: 20px;
+}
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.help-section__heading {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 20px;
+
+  margin-bottom: 30px;
+}
+
+.help-section__heading > span {
+  flex-shrink: 0;
+
+  min-width: 35px;
+
+  padding-top: 7px;
+
+  color: var(--secondary-color);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  font-variant-numeric: tabular-nums;
+}
+
+.help-section__heading h2 {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing: -0.045em;
+}
+
+.help-section__heading p {
+  margin: 10px 0 0;
+
+  color: var(--text-color);
+
+  font-size: 0.8rem;
+
+  line-height: 1.6;
+
+  opacity: 0.48;
+}
+
+/* =========================================================
+   BASE CARD
+========================================================= */
+
+.help-card,
+.cart-card,
+.help-feature-card,
+.help-warning,
+.help-important__item,
+.help-order,
+.help-premium,
+.help-quick-guide__item,
+.help-faq details {
+  border: 1px solid var(--border-color);
+
+  background: var(--card-bg);
+
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.05);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.help-card {
+  position: relative;
+
+  padding: 32px;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+}
+
+.help-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 200px;
+  height: 200px;
+
+  top: -130px;
+  right: -80px;
+
+  border-radius: 50%;
+
+  background: color-mix(in srgb, var(--secondary-color) 7%, transparent);
+
+  filter: blur(60px);
+
+  pointer-events: none;
+}
+
+.help-card__icon {
+  position: relative;
+
+  z-index: 2;
+
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 20px;
+
+  border: 1px solid
+    color-mix(in srgb, var(--secondary-color) 18%, var(--border-color));
+
+  border-radius: 13px;
+
+  background: color-mix(in srgb, var(--secondary-color) 7%, var(--card-bg));
+
+  color: var(--secondary-color);
+
+  font-size: 17px;
+}
+
+.help-card h3 {
+  position: relative;
+  z-index: 2;
+
+  margin: 0 0 14px;
+
+  color: var(--text-color);
+
+  font-size: 1.08rem;
+
+  font-weight: 750;
+
+  letter-spacing: -0.02em;
+}
+
+.help-card p {
+  position: relative;
+  z-index: 2;
+
+  margin: 0 0 13px;
+
+  color: var(--text-color);
+
+  font-size: 0.84rem;
+
+  line-height: 1.8;
+
+  opacity: 0.62;
+}
+
+.help-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   FEATURE GRID
+========================================================= */
+
+.help-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 14px;
+}
+
+.help-grid--two {
+  grid-template-columns: repeat(2, 1fr);
+
+  margin-top: 14px;
+}
+
+/* =========================================================
+   FEATURE CARD
+========================================================= */
+
+.help-feature-card {
+  position: relative;
+
+  min-width: 0;
+
+  padding: 23px;
+
+  border-radius: 17px;
+}
+
+.help-feature-card:hover,
+.help-card:hover,
+.help-premium:hover,
+.help-order:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--secondary-color) 28%,
+    var(--border-color)
+  );
+
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+}
+
+.help-feature-card__icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 17px;
+
+  border: 1px solid
+    color-mix(in srgb, var(--secondary-color) 17%, var(--border-color));
+
+  border-radius: 12px;
+
+  background: color-mix(in srgb, var(--secondary-color) 6%, var(--card-bg));
+
+  color: var(--secondary-color);
+
+  font-size: 15px;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.help-feature-card:hover .help-feature-card__icon {
+  transform: translateY(-2px);
+
+  background: color-mix(in srgb, var(--secondary-color) 11%, var(--card-bg));
+}
+
+.help-feature-card h3 {
+  margin: 0 0 8px;
+
+  color: var(--text-color);
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+}
+
+.help-feature-card p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 0.75rem;
+
+  line-height: 1.7;
+
+  opacity: 0.56;
+}
+
+/* =========================================================
+   HIGHLIGHT
+========================================================= */
+
+.help-highlight {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  margin-top: 23px;
+
+  padding: 13px 15px;
+
+  background: color-mix(in srgb, var(--secondary-color) 5%, var(--card-bg));
+
+  border: 1px solid
+    color-mix(in srgb, var(--secondary-color) 14%, var(--border-color));
+
+  border-radius: 12px;
+
+  color: var(--text-color);
+
+  font-size: 0.76rem;
+  line-height: 1.55;
+
+  font-weight: 600;
+
+  opacity: 0.8;
+}
+
+.help-highlight svg {
+  flex-shrink: 0;
+
+  color: var(--secondary-color);
+}
+
+/* =========================================================
+   STEPS
+========================================================= */
+
+.help-steps {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0;
+}
+
+.help-step {
+  display: grid;
+
+  grid-template-columns: 35px minmax(0, 1fr);
+
+  gap: 14px;
+
+  padding: 16px 0;
+
+  border-top: 1px solid var(--border-color);
+}
+
+.help-step:first-child {
+  border-top: none;
+
+  padding-top: 2px;
+}
+
+.help-step > span {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid
+    color-mix(in srgb, var(--secondary-color) 18%, var(--border-color));
+
+  border-radius: 9px;
+
+  background: color-mix(in srgb, var(--secondary-color) 6%, var(--card-bg));
+
+  color: var(--secondary-color);
+
+  font-size: 10px;
+
+  font-weight: 800;
+}
+
+.help-step strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--text-color);
+
+  font-size: 0.82rem;
+
+  font-weight: 700;
+}
+
+.help-step p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 0.75rem;
+
+  line-height: 1.7;
+
+  opacity: 0.56;
+}
+
+/* =========================================================
+   WARNING
+========================================================= */
+
+.help-warning {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 16px;
+
+  margin-top: 14px;
+
+  padding: 25px;
+
+  border-radius: 18px;
+
+  border-color: color-mix(
+    in srgb,
+    var(--secondary-color) 20%,
+    var(--border-color)
+  );
+
+  background: color-mix(in srgb, var(--secondary-color) 3%, var(--card-bg));
+}
+
+.help-warning__icon {
+  width: 44px;
+  height: 44px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid
+    color-mix(in srgb, var(--secondary-color) 19%, var(--border-color));
+
+  border-radius: 12px;
+
+  background: color-mix(in srgb, var(--secondary-color) 6%, var(--card-bg));
+
+  color: var(--secondary-color);
+}
+
+.help-warning h3 {
+  margin: 0 0 8px;
+
+  color: var(--text-color);
+
+  font-size: 0.93rem;
+  font-weight: 700;
+}
+
+.help-warning p {
+  margin: 0 0 9px;
+
+  color: var(--text-color);
+
+  font-size: 0.76rem;
+
+  line-height: 1.7;
+
+  opacity: 0.58;
+}
+
+.help-warning p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   IMPORTANT
+========================================================= */
+
+.help-important {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 13px;
+}
+
+.help-important__item {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 14px;
+
+  padding: 21px;
+
+  border-radius: 17px;
+}
+
+.help-important__item > svg {
+  flex-shrink: 0;
+
+  margin-top: 2px;
+
+  color: var(--secondary-color);
+
+  font-size: 15px;
+}
+
+.help-important__item strong {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: var(--text-color);
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+}
+
+.help-important__item p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 0.72rem;
+
+  line-height: 1.65;
+
+  opacity: 0.55;
+}
+
+/* =========================================================
+   ORDER
+========================================================= */
+
+.help-order {
+  padding: 30px;
+
+  border-radius: 21px;
+}
+
+.help-order__intro {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 17px;
+
+  margin-bottom: 25px;
+}
+
+.help-order__icon {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid
+    color-mix(in srgb, var(--secondary-color) 18%, var(--border-color));
+
+  border-radius: 13px;
+
+  background: color-mix(in srgb, var(--secondary-color) 7%, var(--card-bg));
+
+  color: var(--secondary-color);
+}
+
+.help-order__intro h3 {
+  margin: 0 0 7px;
+
+  color: var(--text-color);
+
+  font-size: 1.05rem;
+
+  font-weight: 750;
+}
+
+.help-order__intro p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 0.76rem;
+
+  line-height: 1.7;
+
+  opacity: 0.55;
+}
+
+.help-order__timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.help-order__item {
+  display: grid;
+
+  grid-template-columns: 38px minmax(0, 1fr);
+
+  gap: 15px;
+
+  padding: 15px 0;
+
+  border-top: 1px solid var(--border-color);
+}
+
+.help-order__item > span {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: color-mix(in srgb, var(--secondary-color) 7%, var(--card-bg));
+
+  border: 1px solid
+    color-mix(in srgb, var(--secondary-color) 18%, var(--border-color));
+
+  color: var(--secondary-color);
+
+  font-size: 10px;
+
+  font-weight: 800;
+}
+
+.help-order__item strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--text-color);
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+}
+
+.help-order__item p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 0.72rem;
+
+  line-height: 1.7;
+
+  opacity: 0.55;
+}
+
+/* =========================================================
+   PREMIUM
+========================================================= */
+
+.help-premium {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 20px;
+
+  padding: 30px;
+
+  border-radius: 21px;
+
+  background: linear-gradient(
+    140deg,
+    color-mix(in srgb, var(--secondary-color) 7%, var(--card-bg)),
+    var(--card-bg)
+  );
+}
+
+.help-premium__icon {
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid
+    color-mix(in srgb, var(--secondary-color) 20%, var(--border-color));
+
+  border-radius: 15px;
+
+  background: color-mix(in srgb, var(--secondary-color) 9%, var(--card-bg));
+
+  color: var(--secondary-color);
+
+  font-size: 18px;
+}
+
+.help-premium h3 {
+  margin: 0 0 10px;
+
+  color: var(--text-color);
+
+  font-size: 1.05rem;
+
+  font-weight: 750;
+}
+
+.help-premium p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 0.77rem;
+
+  line-height: 1.75;
+
+  opacity: 0.58;
+}
+
+.help-premium__status {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 17px;
+
+  padding: 8px 11px;
+
+  border-radius: 9px;
+
+  border: 1px solid
+    color-mix(in srgb, var(--secondary-color) 17%, var(--border-color));
+
+  background: color-mix(in srgb, var(--secondary-color) 6%, var(--card-bg));
+
+  color: var(--secondary-color);
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.help-premium__status strong {
+  color: var(--text-color);
+}
+
+/* =========================================================
+   QUICK GUIDE
+========================================================= */
+
+.help-quick-guide {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 13px;
+}
+
+.help-quick-guide__item {
+  position: relative;
+
+  min-width: 0;
+
+  padding: 22px;
+
+  border-radius: 17px;
+}
+
+.help-quick-guide__item > span {
+  display: block;
+
+  margin-bottom: 18px;
+
+  color: var(--secondary-color);
+
+  font-size: 10px;
+
+  font-weight: 800;
+}
+
+.help-quick-guide__item > svg {
+  display: block;
+
+  margin-bottom: 13px;
+
+  color: var(--secondary-color);
+
+  font-size: 17px;
+}
+
+.help-quick-guide__item strong {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--text-color);
+
+  font-size: 0.86rem;
+}
+
+.help-quick-guide__item p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 0.72rem;
+
+  line-height: 1.65;
+
+  opacity: 0.54;
+}
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.help-faq {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.help-faq details {
+  overflow: hidden;
+
+  border-radius: 15px;
+}
+
+.help-faq details[open] {
+  border-color: color-mix(
+    in srgb,
+    var(--secondary-color) 24%,
+    var(--border-color)
+  );
+}
+
+.help-faq summary {
+  position: relative;
+
+  list-style: none;
+
+  cursor: pointer;
+
+  padding: 19px 52px 19px 21px;
+
+  color: var(--text-color);
+
+  font-size: 0.82rem;
+
+  line-height: 1.4;
+
+  font-weight: 700;
+}
+
+.help-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.help-faq summary::after {
+  content: "+";
+
+  position: absolute;
+
+  top: 50%;
+  right: 21px;
+
+  transform: translateY(-50%);
+
+  color: var(--text-color);
+
+  font-size: 1.15rem;
+
+  font-weight: 400;
+
+  opacity: 0.4;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.help-faq details[open] summary::after {
+  content: "−";
+
+  color: var(--secondary-color);
+
+  opacity: 1;
+}
+
+.help-faq summary:hover {
+  color: var(--secondary-color);
+}
+
+.help-faq details p {
+  margin: 0;
+
+  padding: 0 52px 20px 21px;
+
+  color: var(--text-color);
+
+  font-size: 0.74rem;
+
+  line-height: 1.75;
+
+  opacity: 0.56;
+}
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+.dark .help-page {
+  background: linear-gradient(180deg, #1f2937 0%, #252d39 50%, #1f2937 100%);
+
+  color: var(--text-color);
+}
+
+.dark .help-card,
+.dark .help-feature-card,
+.dark .help-warning,
+.dark .help-important__item,
+.dark .help-order,
+.dark .help-premium,
+.dark .help-quick-guide__item,
+.dark .help-faq details {
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16);
+}
+
+.dark .help-feature-card:hover,
+.dark .help-card:hover,
+.dark .help-premium:hover,
+.dark .help-order:hover {
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.22);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+  .help-container {
+    width: min(100% - 32px, 900px);
+  }
+
+  .help-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .help-quick-guide {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  .help-page {
+    padding-bottom: 45px;
+  }
+
+  .help-hero {
+    min-height: 430px;
+
+    padding: 95px 20px 75px;
+  }
+
+  .help-hero__logo {
+    width: 64px;
+    height: 64px;
+
+    margin-bottom: 18px;
+
+    border-radius: 17px;
+
+    font-size: 23px;
+  }
+
+  .help-hero__eyebrow {
+    font-size: 9px;
+  }
+
+  .help-hero h1 {
+    font-size: clamp(2.7rem, 13vw, 4.3rem);
+  }
+
+  .help-hero p {
+    margin-top: 19px;
+
+    font-size: 0.82rem;
+
+    line-height: 1.7;
+  }
+
+  .help-container {
+    width: calc(100% - 24px);
+  }
+
+  .help-section {
+    padding-top: 65px;
+  }
+
+  .help-section__heading {
+    gap: 12px;
+
+    margin-bottom: 22px;
+  }
+
+  .help-section__heading > span {
+    min-width: 25px;
+
+    padding-top: 4px;
+
+    font-size: 8px;
+  }
+
+  .help-section__heading h2 {
+    font-size: 1.75rem;
+
+    line-height: 1.05;
+  }
+
+  .help-section__heading p {
+    margin-top: 8px;
+
+    font-size: 0.7rem;
+  }
+
+  .help-grid,
+  .help-grid--two,
+  .help-important {
+    grid-template-columns: 1fr;
+  }
+
+  .help-quick-guide {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .help-card {
+    padding: 23px;
+  }
+
+  .help-feature-card {
+    padding: 20px;
+  }
+
+  .help-warning {
+    padding: 21px;
+
+    gap: 13px;
+  }
+
+  .help-order {
+    padding: 23px;
+  }
+
+  .help-premium {
+    padding: 23px;
+  }
+
+  .help-premium__icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .help-quick-guide__item {
+    padding: 19px;
+  }
+
+  .help-faq summary {
+    padding: 18px 43px 18px 18px;
+  }
+
+  .help-faq details p {
+    padding: 0 18px 19px;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 430px) {
+  .help-hero {
+    min-height: 400px;
+
+    padding: 80px 16px 60px;
+  }
+
+  .help-hero h1 {
+    font-size: 2.55rem;
+  }
+
+  .help-hero p {
+    font-size: 0.76rem;
+  }
+
+  .help-hero__features {
+    gap: 6px;
+  }
+
+  .help-hero__features span {
+    padding: 7px 9px;
+
+    font-size: 9px;
+  }
+
+  .help-container {
+    width: calc(100% - 18px);
+  }
+
+  .help-section {
+    padding-top: 52px;
+  }
+
+  .help-section__heading h2 {
+    font-size: 1.55rem;
+  }
+
+  .help-section__heading p {
+    font-size: 0.66rem;
+  }
+
+  .help-card {
+    padding: 19px;
+  }
+
+  .help-card h3 {
+    font-size: 0.97rem;
+  }
+
+  .help-card p {
+    font-size: 0.76rem;
+  }
+
+  .help-feature-card {
+    padding: 18px;
+  }
+
+  .help-warning {
+    padding: 18px;
+
+    flex-direction: column;
+  }
+
+  .help-order {
+    padding: 19px;
+  }
+
+  .help-order__intro {
+    gap: 12px;
+  }
+
+  .help-premium {
+    padding: 19px;
+
+    flex-direction: column;
+  }
+
+  .help-quick-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .help-important__item {
+    padding: 18px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .help-page *,
+  .help-page *::before,
+  .help-page *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* =========================================================
+   BOOK CONDITIONS
+========================================================= */
+
+.help-conditions {
+  position: relative;
+}
+
+/* =========================================================
+   CONDITIONS GRID
+========================================================= */
+
+.help-conditions__grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 14px;
+
+  margin-top: 14px;
+}
+
+/* =========================================================
+   CONDITION CARD
+========================================================= */
+
+.help-condition-card {
+  position: relative;
+
+  min-width: 0;
+
+  padding: 26px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 18px;
+
+  background: var(--card-bg);
+
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.05);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+/* Decorative glow */
+
+.help-condition-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 150px;
+  height: 150px;
+
+  top: -90px;
+  right: -70px;
+
+  border-radius: 50%;
+
+  background: color-mix(in srgb, var(--condition-color) 8%, transparent);
+
+  filter: blur(45px);
+
+  pointer-events: none;
+}
+
+/* Hover */
+
+.help-condition-card:hover {
+  transform: translateY(-3px);
+
+  border-color: color-mix(
+    in srgb,
+    var(--condition-color) 35%,
+    var(--border-color)
+  );
+
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================================
+   CONDITION COLORS
+========================================================= */
+
+.help-condition-card--very-good {
+  --condition-color: #22c55e;
+}
+
+.help-condition-card--good {
+  --condition-color: #3b82f6;
+}
+
+.help-condition-card--poor {
+  --condition-color: #f59e0b;
+}
+
+.help-condition-card--very-poor {
+  --condition-color: #ef4444;
+}
+
+/* =========================================================
+   TOP ROW
+========================================================= */
+
+.help-condition-card__top {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   COLOR DOT
+========================================================= */
+
+.help-condition-card__dot {
+  width: 10px;
+  height: 10px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--condition-color);
+
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--condition-color) 10%, transparent);
+}
+
+/* =========================================================
+   CONDITION LABEL
+========================================================= */
+
+.help-condition-card__label {
+  color: var(--condition-color);
+
+  font-size: 0.68rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.help-condition-card h3 {
+  position: relative;
+
+  z-index: 2;
+
+  margin: 0 0 10px;
+
+  color: var(--text-color);
+
+  font-size: 1rem;
+
+  font-weight: 750;
+
+  letter-spacing: -0.02em;
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.help-condition-card > p {
+  position: relative;
+
+  z-index: 2;
+
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 0.82rem;
+
+  line-height: 1.75;
+
+  opacity: 0.62;
+}
+
+/* =========================================================
+   EXPECTED CONDITION
+========================================================= */
+
+.help-condition-card__example {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+  margin-top: 20px;
+
+  padding-top: 16px;
+
+  border-top: 1px solid
+    color-mix(in srgb, var(--condition-color) 14%, var(--border-color));
+}
+
+.help-condition-card__example strong {
+  color: var(--text-color);
+
+  font-size: 0.68rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+}
+
+.help-condition-card__example span {
+  color: var(--text-color);
+
+  font-size: 0.76rem;
+
+  line-height: 1.65;
+
+  opacity: 0.48;
+}
+
+/* =========================================================
+   CONDITION-SPECIFIC ACCENTS
+========================================================= */
+
+.help-condition-card--very-good .help-condition-card__dot {
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+}
+
+.help-condition-card--good .help-condition-card__dot {
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.help-condition-card--poor .help-condition-card__dot {
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+}
+
+.help-condition-card--very-poor .help-condition-card__dot {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+/* =========================================================
+   WARNING
+========================================================= */
+
+.help-conditions__warning {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 15px;
+
+  margin-top: 14px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+  .help-conditions__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .help-condition-card {
+    padding: 23px;
+  }
+}
+
+@media (max-width: 520px) {
+  .help-condition-card {
+    padding: 20px;
+  }
+
+  .help-condition-card__top {
+    margin-bottom: 16px;
+  }
+
+  .help-condition-card__example {
+    margin-top: 17px;
+    padding-top: 14px;
+  }
+}
+/* =========================================================
+   TRADING
+========================================================= */
+
+.help-trading {
+  position: relative;
+}
+
+/* =========================================================
+   TRADING GRID
+========================================================= */
+
+.help-trading__grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 14px;
+
+  margin-top: 14px;
+}
+
+/* =========================================================
+   FEATURE CARDS
+========================================================= */
+
+.help-trading__grid .help-feature-card {
+  min-height: 170px;
+}
+
+/* =========================================================
+   STRONG TEXT
+========================================================= */
+
+.help-trading strong {
+  color: var(--secondary-color);
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   PRICE EXAMPLE
+========================================================= */
+
+.help-trading__example {
+  margin-top: 14px;
+
+  padding: 26px;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 18px;
+
+  background: var(--card-bg);
+
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================================
+   EXAMPLE HEADER
+========================================================= */
+
+.help-trading__example-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 24px;
+}
+
+.help-trading__example-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  color: var(--secondary-color);
+
+  background: color-mix(in srgb, var(--secondary-color) 10%, transparent);
+}
+
+.help-trading__example-header h3 {
+  margin: 0 0 3px;
+
+  color: var(--text-color);
+
+  font-size: 1rem;
+
+  font-weight: 750;
+}
+
+.help-trading__example-header p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 0.78rem;
+
+  opacity: 0.55;
+}
+
+/* =========================================================
+   PRICE CALCULATION
+========================================================= */
+
+.help-trading__price {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 20px;
+
+  padding: 22px;
+
+  border-radius: 14px;
+
+  background: color-mix(in srgb, var(--secondary-color) 4%, var(--card-bg));
+
+  border: 1px solid var(--border-color);
+}
+
+.help-trading__price-item {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 7px;
+
+  min-width: 130px;
+}
+
+.help-trading__price-item span {
+  color: var(--text-color);
+
+  font-size: 0.68rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+
+  opacity: 0.5;
+}
+
+.help-trading__price-item strong {
+  color: var(--text-color);
+
+  font-size: 1.45rem;
+
+  font-weight: 800;
+}
+
+.help-trading__operator {
+  color: var(--secondary-color);
+
+  font-size: 0.9rem;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   EXAMPLE NOTE
+========================================================= */
+
+.help-trading__example-note {
+  margin: 18px 0 0;
+
+  color: var(--text-color);
+
+  font-size: 0.8rem;
+
+  line-height: 1.7;
+
+  text-align: center;
+
+  opacity: 0.6;
+}
+
+/* =========================================================
+   WARNING
+========================================================= */
+
+.help-trading__warning {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 15px;
+
+  margin-top: 14px;
+}
+
+.help-trading__warning ul {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin: 10px 0 0;
+
+  padding-left: 18px;
+}
+
+.help-trading__warning li {
+  color: var(--text-color);
+
+  font-size: 0.8rem;
+
+  line-height: 1.6;
+
+  opacity: 0.7;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+  .help-trading__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .help-trading__example {
+    padding: 22px;
+  }
+
+  .help-trading__price {
+    flex-direction: column;
+
+    gap: 14px;
+  }
+
+  .help-trading__operator {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .help-trading__example {
+    padding: 20px;
+  }
+
+  .help-trading__example-header {
+    margin-bottom: 20px;
+  }
+
+  .help-trading__price {
+    padding: 18px;
+  }
+
+  .help-trading__price-item {
+    min-width: 0;
+  }
+
+  .help-trading__price-item strong {
+    font-size: 1.25rem;
+  }
+}
+.help-publishing {
+  border-color: color-mix(
+    in srgb,
+    var(--secondary-color) 28%,
+    var(--border-color)
+  );
+}
+
+.help-publishing .help-warning__icon {
+  color: var(--secondary-color);
+}
+
+.help-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 20px 0;
+  padding-left: 24px;
+}
+
+.help-steps li {
+  padding-left: 6px;
+}
+
+.help-steps li strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.help-steps li span {
+  display: block;
+  color: var(--primary-pera);
+  line-height: 1.6;
+}
+
+.help-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.help-list li {
+  padding-left: 4px;
+  line-height: 1.6;
+}
+
+.help-card h4 {
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+/* =========================================================
+   SHOPPING CART
+========================================================= */
+
+.help-cart {
+  position: relative;
+}
+
+/* =========================================================
+   CART GRID
+========================================================= */
+
+.help-cart__grid {
+  margin-top: 14px;
+}
+
+/* =========================================================
+   PAYMENT / ORDER FLOW
+========================================================= */
+
+.help-cart__payment {
+  margin-top: 14px;
+}
+
+.help-cart__steps {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 24px;
+}
+
+.help-cart__step {
+  display: grid;
+
+  grid-template-columns: 38px minmax(0, 1fr);
+
+  gap: 15px;
+
+  padding: 16px 0;
+
+  border-top: 1px solid var(--border-color);
+}
+
+.help-cart__step:first-child {
+  padding-top: 0;
+
+  border-top: none;
+}
+
+.help-cart__step > span {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: color-mix(in srgb, var(--secondary-color) 7%, var(--card-bg));
+
+  border: 1px solid
+    color-mix(in srgb, var(--secondary-color) 18%, var(--border-color));
+
+  color: var(--secondary-color);
+
+  font-size: 10px;
+
+  font-weight: 800;
+}
+
+.help-cart__step strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--text-color);
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+}
+
+.help-cart__step p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 0.74rem;
+
+  line-height: 1.7;
+
+  opacity: 0.56;
+}
+
+/* =========================================================
+   CART WARNING
+========================================================= */
+
+.help-cart__warning {
+  margin-top: 14px;
+}
+
+.help-cart__warning ul {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin: 10px 0 0;
+
+  padding-left: 18px;
+}
+
+.help-cart__warning li {
+  color: var(--text-color);
+
+  font-size: 0.76rem;
+
+  line-height: 1.65;
+
+  opacity: 0.65;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+  .help-cart__payment {
+    margin-top: 14px;
+  }
+
+  .help-cart__step {
+    grid-template-columns: 34px minmax(0, 1fr);
+
+    gap: 12px;
+  }
+}
+
+@media (max-width: 430px) {
+  .help-cart__step {
+    grid-template-columns: 1fr;
+
+    gap: 9px;
+  }
+
+  .help-cart__step > span {
+    width: 30px;
+    height: 30px;
+  }
+
+  .help-cart__warning ul {
+    padding-left: 17px;
+  }
+}
+.order-deals {
+  font-size: 0.8rem !important;
+}
+.order-deals-spn {
+  text-transform: uppercase;
+  font-weight: 700;
+}

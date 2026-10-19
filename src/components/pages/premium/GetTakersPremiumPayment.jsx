@@ -164,12 +164,12 @@ const GetTakersPremiumPayment = () => {
             <p className="text-gray-700 dark:text-white">
                 * Be sure to enter your account nickname that you registered on the site to activate your premium subscription.
             </p>
-            <input name="lastName" placeholder="Last Name" onChange={handleChange} className="p-2 rounded text-black" required />
-            <input name="firstName" placeholder="First Name" onChange={handleChange} className="p-2 rounded text-black" required />
+            <input name="lastName" placeholder="Last Name" onChange={handleChange} className="p-2 rounded text-gray-900 dark:text-white" required />
+            <input name="firstName" placeholder="First Name" onChange={handleChange} className="p-2 rounded text-gray-900 dark:text-white" required />
             <p className="text-gray-700 dark:text-white">
                 * Be sure to enter the email address of the account you registered on the site to activate your premium subscription.
             </p>
-            <input name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="p-2 rounded text-black" required />
+            <input name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="p-2 rounded text-gray-900 dark:text-white" required />
             <input
               name="phone"
               value={formData.phone}
@@ -180,10 +180,10 @@ const GetTakersPremiumPayment = () => {
                 if (digits.length > 12) return;
                 setFormData({ ...formData, phone: v });
               }}
-              className="p-2 rounded text-black"
+              className="p-2 rounded text-gray-900 dark:text-white"
               required
             />
-            <button className="bg-[var(--secondary-color)] text-white py-2 rounded">Next</button>
+            <button className="bg-[var(--secondary-color)] hover:bg-[var(--secondary-color-hover)] text-white py-2 rounded">Next</button>
           </form>
         )}
 
@@ -194,7 +194,7 @@ const GetTakersPremiumPayment = () => {
               name="bankName"
               placeholder="Bank Name"
               onChange={handlePaymentChange}
-              className="p-2 rounded text-black"
+              className="p-2 rounded text-gray-900 dark:text-white"
               required
             />
             <input
@@ -207,7 +207,7 @@ const GetTakersPremiumPayment = () => {
                 const formatted = digits.replace(/(.{4})/g, "$1 ").trim();
                 setPaymentData({ ...paymentData, cardNumber: formatted });
               }}
-              className="p-2 rounded text-black"
+              className="p-2 rounded text-gray-900 dark:text-white"
               required
             />
             <button
@@ -219,7 +219,7 @@ const GetTakersPremiumPayment = () => {
                 }
                 setStep(3);
               }}
-              className="bg-[var(--secondary-color)] text-white py-2 rounded"
+              className="bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)] text-white py-2 rounded"
             >
               Continue
             </button>
@@ -232,7 +232,7 @@ const GetTakersPremiumPayment = () => {
 
             <p><b>Order Number:</b> {orderNumber}
               <FaRegCopy className="inline ml-2 cursor-pointer"
-                onClick={()=>{navigator.clipboard.writeText(orderNumber);toast.success("Copied!");}}/>
+                onClick={()=>{navigator.clipboard.writeText(orderNumber);toast.success("Order number copied");}}/>
             </p>
             <p><b>Product:</b> {product.name}</p>
             <p><b>Price:</b> {product.price} ₴</p>
@@ -245,7 +245,7 @@ const GetTakersPremiumPayment = () => {
             <div className="bg-black text-white p-4 rounded flex justify-between items-center">
               <span style={{letterSpacing:"2px"}}>4790 7299 2893 6954</span>
               <FaRegCopy className="cursor-pointer"
-                onClick={()=>{navigator.clipboard.writeText("4790729928936954");toast.success("Card copied!");}}/>
+                onClick={()=>{navigator.clipboard.writeText("4790729928936954");toast.success("Card copied");}}/>
             </div>
 
             <div className="bg-gray-100 p-4 rounded text-center">
@@ -279,7 +279,7 @@ const GetTakersPremiumPayment = () => {
 
             <div className="flex gap-3 mt-4">
               <button onClick={handlePrint}
-                className="bg-[var(--secondary-color)] text-white px-4 py-2 rounded">
+                className="bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)] text-white px-4 py-2 rounded">
                 Print Receipt
               </button>
               <button onClick={()=>navigate("/")}

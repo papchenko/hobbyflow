@@ -1,0 +1,53 @@
+/* BookFlow Support — scoped styles, light/dark CSS variables */
+.bf-support-widget, .bf-support-admin {
+  --bf-surface: var(--card-bg, #fff);
+  --bf-page: var(--bg-color, #f8fafc);
+  --bf-text: var(--text-color, #18212f);
+  --bf-border: var(--border-color, #e5e7eb);
+  --bf-accent: var(--secondary-color, #c5269a);
+  color: var(--bf-text);
+}
+.bf-support-widget { position: fixed; bottom: max(22px, env(safe-area-inset-bottom)); right: max(22px, env(safe-area-inset-right)); z-index: 10000; font-family: inherit; }
+.bf-support-fab { position: relative; width: 58px; height: 58px; display: grid; place-items: center; border: none; border-radius: 50%; background: var(--bf-accent); color: white; font-size: 23px; cursor: pointer; box-shadow: 0 12px 30px #0003; transition: transform .2s, box-shadow .2s; margin-left: auto; }
+.bf-support-fab:hover { transform: translateY(-3px); box-shadow: 0 15px 35px #0004; }
+.bf-support-dot, .bf-support-thread-title i { width: 11px; height: 11px; background: #f43f5e; border-radius: 50%; display: inline-block; }
+.bf-support-dot { position: absolute; top: 3px; right: 3px; border: 2px solid var(--bf-surface); width: 14px; height: 14px; }
+.bf-support-window { width: min(370px, calc(100vw - 24px)); height: min(530px, calc(100dvh - 110px)); margin-bottom: 14px; background: var(--bf-surface); border: 1px solid var(--bf-border); border-radius: 19px; box-shadow: 0 20px 65px #0003; display: flex; flex-direction: column; overflow: hidden; }
+.bf-support-header { display: flex; align-items: center; justify-content: space-between; padding: 17px 18px; border-bottom: 1px solid var(--bf-border); background: color-mix(in srgb, var(--bf-accent) 6%, var(--bf-surface)); }
+.bf-support-header strong, .bf-support-admin-conversation-header strong { display: block; font-size: 15px; }
+.bf-support-header small, .bf-support-admin-conversation-header small { display: block; margin-top: 3px; font-size: 11px; opacity: .65; }
+.bf-support-header button { background: none; border: none; color: var(--bf-text); cursor: pointer; padding: 7px; }
+.bf-support-messages { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 18px; background: var(--bf-page); }
+.bf-support-message { max-width: 88%; padding: 11px 13px; border: 1px solid var(--bf-border); border-radius: 14px; background: var(--bf-surface); overflow-wrap: anywhere; }
+.bf-support-message.is-user { align-self: flex-end; border-color: color-mix(in srgb, var(--bf-accent) 25%, var(--bf-border)); background: color-mix(in srgb, var(--bf-accent) 9%, var(--bf-surface)); }
+.bf-support-message.is-admin { align-self: flex-start; }
+.bf-support-message span { font-size: 10px; font-weight: 750; color: var(--bf-accent); }
+.bf-support-message p { font-size: 13px; line-height: 1.55; white-space: pre-wrap; margin: 5px 0 0; }
+.bf-support-empty { margin: auto; text-align: center; font-size: 13px; line-height: 1.7; opacity: .65; padding: 18px; }
+.bf-support-compose { padding: 12px; border-top: 1px solid var(--bf-border); display: flex; align-items: end; gap: 9px; background: var(--bf-surface); }
+.bf-support-compose textarea { flex: 1; min-width: 0; resize: none; border: 1px solid var(--bf-border); border-radius: 11px; padding: 11px; background: var(--bf-page); color: var(--bf-text); outline: none; font: inherit; font-size: 13px; }
+.bf-support-compose textarea:focus { border-color: var(--bf-accent); }
+.bf-support-compose button, .bf-support-login button { border: none; border-radius: 11px; padding: 12px 15px; background: var(--bf-accent); color: #fff; cursor: pointer; font-weight: 700; }
+.bf-support-compose button:disabled { opacity: .45; cursor: not-allowed; }
+.bf-support-login { margin: auto; padding: 30px 24px; text-align: center; }
+.bf-support-login > svg { color: var(--bf-accent); }
+.bf-support-login h3 { font-size: 18px; margin: 12px 0; }
+.bf-support-login p { font-size: 13px; line-height: 1.6; opacity: .7; margin-bottom: 18px; }
+.bf-support-admin { --bf-surface: var(--card-bg, #fff); --bf-page: var(--bg-color, #f8fafc); --bf-text: var(--text-color, #18212f); --bf-border: var(--border-color, #e5e7eb); --bf-accent: var(--secondary-color, #c5269a); min-height: 75vh; padding: 32px clamp(14px, 4vw, 45px); background: var(--bf-page); }
+.bf-support-admin-title h1 { font-size: clamp(24px, 4vw, 34px); font-weight: 800; margin: 0; }
+.bf-support-admin-title p { opacity: .65; font-size: 13px; margin: 8px 0 25px; }
+.bf-support-admin-layout { display: grid; grid-template-columns: minmax(220px, 310px) minmax(0, 1fr); gap: 14px; height: min(680px, 75vh); }
+.bf-support-inbox, .bf-support-admin-conversation { background: var(--bf-surface); border: 1px solid var(--bf-border); border-radius: 17px; min-height: 0; overflow: hidden; }
+.bf-support-inbox { overflow-y: auto; }
+.bf-support-inbox h2 { font-size: 15px; padding: 18px; margin: 0; border-bottom: 1px solid var(--bf-border); }
+.bf-support-inbox h2 span { color: var(--bf-accent); }
+.bf-support-thread { display: block; width: 100%; text-align: left; background: transparent; color: var(--bf-text); border: none; border-bottom: 1px solid var(--bf-border); padding: 14px 17px; cursor: pointer; }
+.bf-support-thread:hover, .bf-support-thread.is-selected { background: color-mix(in srgb, var(--bf-accent) 8%, var(--bf-surface)); }
+.bf-support-thread-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13px; }
+.bf-support-thread small, .bf-support-thread-preview { display: block; margin-top: 5px; font-size: 11px; opacity: .65; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bf-support-thread em { display: inline-block; margin-top: 8px; font-size: 10px; font-style: normal; color: var(--bf-accent); }
+.bf-support-admin-conversation { display: flex; flex-direction: column; }
+.bf-support-admin-conversation-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 18px; border-bottom: 1px solid var(--bf-border); }
+.bf-support-admin-conversation-header button { background: var(--bf-page); color: var(--bf-text); border: 1px solid var(--bf-border); border-radius: 9px; padding: 9px 12px; cursor: pointer; font-size: 12px; }
+.bf-support-admin-state { padding: 60px 20px; text-align: center; }
+@media (max-width: 650px) { .bf-support-admin-layout { grid-template-columns: 1fr; height: auto; } .bf-support-inbox { max-height: 260px; } .bf-support-admin-conversation { height: 480px; } .bf-support-widget { right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } .bf-support-window { width: min(370px, calc(100vw - 24px)); } }

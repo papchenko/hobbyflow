@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FaRegCopy } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { FaHandshakeSimple } from "react-icons/fa6";
 
 const BuyerOrdersPage = () => {
   const { user } = useAuth();
@@ -35,7 +36,7 @@ const BuyerOrdersPage = () => {
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
-    toast.success("Card number copied!");
+    toast.success("Card number copied");
   };
 
   return (
@@ -48,11 +49,24 @@ const BuyerOrdersPage = () => {
         ) : (
           <div className="flex flex-col gap-4">
             {orders.map((order) => {
+              // const totalAmount = order.items?.reduce(
+              //   (sum, item) =>
+              //     sum + (item.purchaseType === "rental" ? item.priceLending : item.price),
+              //   0
+              // );
               const totalAmount = order.items?.reduce(
-                (sum, item) =>
-                  sum + (item.purchaseType === "rental" ? item.priceLending : item.price),
-                0
-              );
+  (sum, item) =>
+    sum +
+    Number(
+      item.finalPrice ??
+      (
+        item.purchaseType === "rental"
+          ? item.priceLending
+          : item.price
+      )
+    ),
+  0
+);
 
               return (
                 <div
@@ -64,20 +78,37 @@ const BuyerOrdersPage = () => {
                   <p>
                     <b>Book:</b> {order.items?.[0]?.name} (
                     {order.items?.[0]?.purchaseType === "rental" ? "Lending" : "Buy"} —{" "}
-                    {order.items?.[0]?.purchaseType === "rental"
+                    {/* {order.items?.[0]?.purchaseType === "rental"
                       ? order.items?.[0]?.priceLending
-                      : order.items?.[0]?.price} ₴
+                      : order.items?.[0]?.price} ₴ */}
+                      {order.items?.[0]?.finalPrice ??
+(
+  order.items?.[0]?.purchaseType === "rental"
+    ? order.items?.[0]?.priceLending
+    : order.items?.[0]?.price
+)} ₴
                     )
                   </p>
                   <p><b>Total Sum:</b> {totalAmount} ₴</p>
-                  <p>
-                    <b>Status:</b>{" "}
-                    {order.status === "pending"
-                      ? "Waiting"
-                      : order.status === "accepted"
-                      ? "Accepted"
-                      : "Rejected"}
-                  </p>
+<div>
+  <p>
+    <b>Status:</b>{" "}
+    {order.status === "pending"
+      ? "Waiting"
+      : order.status === "accepted"
+      ? "Accepted"
+      : order.status === "rejected"
+      ? "Rejected"
+      : order.status || "—"}
+  </p>
+
+  {order.tradeId && (
+    <div className="flex gap-2 items-center text-green-600 font-semibold mt-1">
+      <FaHandshakeSimple className="text-base text-gray-700 dark:text-white" />
+      Purchased after successful trade
+    </div>
+  )}
+</div>
 
                   {order.status === "accepted" && order.buyerNotification && (
                     <div className="mt-2 p-2 bg-gray-100 dark:bg-gray-700 rounded text-sm flex flex-col gap-1">
@@ -103,11 +134,25 @@ const BuyerOrdersPage = () => {
                       {order.buyerNotification && order.items && (
                         <p>
                           <b>Total Sum:</b>{" "}
-                          {order.items.reduce(
+                          {/* {order.items.reduce(
                             (sum, item) =>
                               sum + (item.purchaseType === "rental" ? item.priceLending : item.price),
                             0
-                          )}{" "}
+                          ) */}
+                          {order.items.reduce(
+  (sum, item) =>
+    sum +
+    Number(
+      item.finalPrice ??
+      (
+        item.purchaseType === "rental"
+          ? item.priceLending
+          : item.price
+      )
+    ),
+  0
+)
+                          }{" "}
                           ₴
                         </p>
                       )}

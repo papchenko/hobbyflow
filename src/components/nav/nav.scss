@@ -1,5 +1,6 @@
 .logo-img {
-  width: 100px;
+  width: 74px;
+  margin-block: 10px;
 }
 .search-bar {
     display: flex;
@@ -70,7 +71,9 @@
 
 @media (max-width: 768px) {
     .logo-img {
-    width: 67px;
+    // width: 67px;
+    width: 66px;
+    // padding-block: 2px;
   }
     .search-bar {
         width: 100%;
@@ -93,4 +96,127 @@
     .fas {
         font-size: 0.9rem;
     }
+}
+
+@keyframes mobileMenuIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-mobile-menu-in {
+  animation: mobileMenuIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+//========================================================================================================================================================
+/* =========================
+   DESKTOP THEME POPUP
+========================= */
+
+.theme-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+
+  width: 155px;
+  padding: 6px;
+
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  border-radius: 12px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  z-index: 100;
+  animation: themePopupIn 0.18s ease-out;
+}
+
+.dark .theme-popup {
+  background: rgba(31, 41, 55, 0.97);
+  border-color: rgba(75, 85, 99, 0.8);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.theme-popup__option {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 9px 11px;
+  margin-block: 5px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #4b5563;
+
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.dark .theme-popup__option {
+  color: #d1d5db;
+}
+
+.theme-popup__option svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.theme-popup__option:hover {
+  background: #f3f4f6;
+  color: var(--secondary-color);
+}
+
+.dark .theme-popup__option:hover {
+  background: #374151;
+  color: var(--secondary-color);
+}
+
+.theme-popup__option--active {
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--secondary-color);
+}
+
+.dark .theme-popup__option--active {
+  background: rgba(76, 175, 80, 0.14);
+  color: var(--secondary-color);
+}
+
+@keyframes themePopupIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -9,7 +9,7 @@ export const uploadFile = async (file) => {
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", "bookflow");
+  formData.append("upload_preset", "hobbyflow");
 
   const res = await fetch(url, {
     method: "POST",

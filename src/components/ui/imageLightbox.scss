@@ -1,0 +1,259 @@
+.bookflow-signature {
+  --bf-primary: var(--primary-color, #6366f1);
+  --bf-secondary: var(--secondary-color, #475569);
+
+  --bf-surface: #ffffff;
+  --bf-text: #111827;
+  --bf-muted: #6b7280;
+  --bf-border: rgba(17, 24, 39, 0.1);
+
+  --yarl__color_backdrop: rgba(243, 244, 246, 0.98);
+  --yarl__color_button: var(--bf-text);
+  --yarl__color_button_active: var(--bf-primary);
+  --yarl__color_button_disabled: #9ca3af;
+
+  --yarl__button_filter: none;
+  --yarl__toolbar_padding: 16px;
+  --yarl__navigation_button_padding: 0px;
+
+  font-family: inherit;
+
+  /* ==========================
+     TOP HEADER
+  ========================== */
+
+  .yarl__toolbar {
+    width: 100%;
+    min-height: 88px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 16px 24px;
+
+    background: var(--bf-surface);
+    border-bottom: 1px solid var(--bf-border);
+
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+
+    z-index: 20;
+  }
+
+  .bf-gallery-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 5px;
+    min-width: 0;
+    margin-right: auto;
+  }
+
+  .bf-gallery-eyebrow {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+
+    color: var(--bf-primary);
+  }
+
+  .bf-gallery-title {
+    max-width: 450px;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    color: var(--bf-text);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ==========================
+     MAIN IMAGE
+  ========================== */
+
+  .yarl__slide_image {
+    max-width: 94%;
+    max-height: 88%;
+
+    object-fit: contain;
+    border-radius: 16px;
+
+    box-shadow:
+      0 15px 50px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ==========================
+     BUTTONS
+  ========================== */
+
+  .yarl__button {
+    width: 46px;
+    height: 46px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border-radius: 14px;
+
+    background: var(--bf-surface);
+    border: 1px solid var(--bf-border);
+
+    color: var(--bf-text);
+
+    box-shadow:
+      0 3px 12px rgba(0, 0, 0, 0.05);
+
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: var(--bf-primary);
+      border-color: var(--bf-primary);
+      color: #ffffff;
+
+      transform: translateY(-2px);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--bf-primary);
+      outline-offset: 3px;
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  /* ==========================
+     NAVIGATION
+  ========================== */
+
+  .yarl__navigation_prev,
+  .yarl__navigation_next {
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 16px;
+
+    z-index: 15;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-50%) scale(1.05);
+    }
+  }
+
+  .yarl__navigation_prev {
+    left: 24px;
+  }
+
+  .yarl__navigation_next {
+    right: 24px;
+  }
+
+  /* ==========================
+     DARK MODE
+  ========================== */
+
+  :is(.dark) & {
+    --bf-surface: #1f2937;
+    --bf-text: #f9fafb;
+    --bf-muted: #9ca3af;
+    --bf-border: rgba(255, 255, 255, 0.1);
+
+    --yarl__color_backdrop: rgba(12, 17, 27, 0.98);
+  }
+
+  /* ==========================
+     MOBILE
+  ========================== */
+
+  @media (max-width: 768px) {
+    --yarl__toolbar_padding: 10px;
+
+    .yarl__toolbar {
+      min-height: 72px;
+      padding: 12px;
+      gap: 8px;
+    }
+
+    .bf-gallery-eyebrow {
+      font-size: 9px;
+      letter-spacing: 1px;
+    }
+
+    .bf-gallery-title {
+      max-width: 145px;
+      font-size: 13px;
+    }
+
+    .yarl__button {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .yarl__navigation_prev,
+    .yarl__navigation_next {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+    }
+
+    .yarl__navigation_prev {
+      left: 8px;
+    }
+
+    .yarl__navigation_next {
+      right: 8px;
+    }
+
+    .yarl__slide_image {
+      max-width: 100%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .yarl__button {
+      transition: none;
+    }
+  }
+}
+
+/* Lightbox is rendered in a portal,
+   so the dark theme must target it globally. */
+
+.dark .bookflow-signature {
+  --bf-surface: #1f2937;
+  --bf-text: #f9fafb;
+  --bf-muted: #9ca3af;
+  --bf-border: rgba(255, 255, 255, 0.1);
+
+  --yarl__color_backdrop: rgba(12, 17, 27, 0.98);
+}

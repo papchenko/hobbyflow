@@ -17,6 +17,7 @@
     "bootstrap": "^5.3.8",
     "epubjs": "^0.3.93",
     "firebase": "^12.9.0",
+    "framer-motion": "^12.38.0",
     "idb-keyval": "^6.2.2",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.10",
@@ -26,7 +27,8 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.13.0",
     "react-toastify": "^11.0.5",
-    "swiper": "^12.1.0"
+    "swiper": "^12.1.0",
+    "yet-another-react-lightbox": "^3.32.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

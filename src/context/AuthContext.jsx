@@ -1,10 +1,19 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
+
 import {
   doc,
   getDoc,
@@ -12,6 +21,7 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
+
 import { auth, db } from "../firebase";
 
 const AuthContext = createContext();
@@ -38,6 +48,7 @@ export const AuthProvider = ({ children }) => {
             taker: false,
             premiumUntil: null,
           });
+
           data.taker = false;
           data.premiumUntil = null;
         }
@@ -50,36 +61,66 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        setUser(firebaseUser);
+    let heartbeatInterval = null;
 
-        const userRef = doc(db, "users", firebaseUser.uid);
-        const snap = await getDoc(userRef);
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      async (firebaseUser) => {
+        if (firebaseUser) {
+          setUser(firebaseUser);
 
-        if (!snap.exists()) {
-          await setDoc(userRef, {
-            name: firebaseUser.displayName || "",
-            email: firebaseUser.email,
-            photoURL: firebaseUser.photoURL || "",
-            taker: false,
-            premiumUntil: null,
-            lastAvatarChange: null,
-            lastNicknameChange: null,
-            role: "user",
-            createdAt: serverTimestamp(),
-          });
+          const userRef = doc(db, "users", firebaseUser.uid);
+          const snap = await getDoc(userRef);
+
+          if (!snap.exists()) {
+            await setDoc(userRef, {
+              name: firebaseUser.displayName || "",
+              email: firebaseUser.email,
+              photoURL: firebaseUser.photoURL || "",
+              taker: false,
+              premiumUntil: null,
+              lastAvatarChange: null,
+              lastNicknameChange: null,
+              role: "user",
+              createdAt: serverTimestamp(),
+              lastSeen: serverTimestamp(),
+            });
+          } else {
+            await updateDoc(userRef, {
+              lastSeen: serverTimestamp(),
+            });
+          }
+
+          await fetchUserProfile(firebaseUser);
+
+          // Оновлюємо lastSeen кожні 30 секунд
+          heartbeatInterval = setInterval(async () => {
+            try {
+              await updateDoc(userRef, {
+                lastSeen: serverTimestamp(),
+              });
+            } catch (error) {
+              console.error(
+                "Failed to update online status:",
+                error
+              );
+            }
+          }, 30000);
+        } else {
+          setUser(null);
+          setUserProfile(null);
+          setLoading(false);
         }
-
-        await fetchUserProfile(firebaseUser);
-      } else {
-        setUser(null);
-        setUserProfile(null);
-        setLoading(false);
       }
-    });
+    );
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+
+      if (heartbeatInterval) {
+        clearInterval(heartbeatInterval);
+      }
+    };
   }, []);
 
   const login = (email, password) =>
@@ -104,9 +145,41 @@ export const AuthProvider = ({ children }) => {
       lastNicknameChange: null,
       role: "user",
       createdAt: serverTimestamp(),
+      lastSeen: serverTimestamp(),
     });
 
     return res;
+  };
+
+  const loginWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+
+    const result = await signInWithPopup(auth, provider);
+    const firebaseUser = result.user;
+
+    const userRef = doc(db, "users", firebaseUser.uid);
+    const snap = await getDoc(userRef);
+
+    if (!snap.exists()) {
+      await setDoc(userRef, {
+        name: firebaseUser.displayName || "",
+        email: firebaseUser.email,
+        photoURL: firebaseUser.photoURL || "",
+        taker: false,
+        premiumUntil: null,
+        lastAvatarChange: null,
+        lastNicknameChange: null,
+        role: "user",
+        createdAt: serverTimestamp(),
+        lastSeen: serverTimestamp(),
+      });
+    } else {
+      await updateDoc(userRef, {
+        lastSeen: serverTimestamp(),
+      });
+    }
+
+    return firebaseUser;
   };
 
   const logout = () => signOut(auth);
@@ -127,6 +200,7 @@ export const AuthProvider = ({ children }) => {
         register,
         logout,
         refreshUser,
+        loginWithGoogle,
       }}
     >
       {!loading && children}

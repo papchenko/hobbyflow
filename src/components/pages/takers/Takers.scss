@@ -1,0 +1,1001 @@
+/* =========================================================
+   TAKERS
+   LIGHT / DARK THEME
+========================================================= */
+
+.takers {
+  position: relative;
+
+  min-height: 100vh;
+
+  padding: 110px 0 70px;
+
+  overflow: hidden;
+
+  background: var(--card-bg);
+  color: var(--text-color);
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.takers__container {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.takers__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 42px;
+}
+
+.takers__eyebrow {
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  color: var(--secondary-color);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.takers__title {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+
+  transition: color 0.25s ease;
+}
+
+.takers__subtitle {
+  max-width: 520px;
+
+  margin: 14px 0 0;
+
+  color: var(--text-color);
+  opacity: 0.55;
+
+  font-size: 15px;
+  line-height: 1.6;
+
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.takers__counter {
+  min-width: 100px;
+
+  padding: 15px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+
+  background: var(--card-bg);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+
+  backdrop-filter: blur(18px);
+}
+
+.takers__counter span {
+  color: var(--text-color);
+
+  font-size: 25px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.takers__counter small {
+  margin-top: 5px;
+
+  color: var(--text-color);
+  opacity: 0.45;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.takers__grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.taker-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 100%;
+
+  padding: 22px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border-color);
+  border-radius: 22px;
+
+  background: var(--header-bg);
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+  backdrop-filter: blur(20px);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.25s ease,
+    box-shadow 0.3s ease;
+}
+
+.taker-card:hover {
+  transform: translateY(-6px);
+
+  border-color: var(--secondary-color);
+
+  box-shadow:
+    0 22px 55px rgba(0, 0, 0, 0.13),
+    0 0 0 1px rgba(201, 20, 153, 0.05);
+}
+
+/* =========================================================
+   CARD GLOW
+========================================================= */
+
+.taker-card__glow {
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -110px;
+  right: -80px;
+
+  border-radius: 50%;
+
+  background: var(--secondary-color);
+
+  opacity: 0.07;
+
+  filter: blur(45px);
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.taker-card:hover .taker-card__glow {
+  opacity: 0.13;
+
+  transform: scale(1.3);
+}
+
+/* =========================================================
+   TOP
+========================================================= */
+
+.taker-card__top {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.taker-card__avatar-wrapper {
+  position: relative;
+
+  flex-shrink: 0;
+}
+
+.taker-card__avatar {
+  display: block;
+
+  width: 58px;
+  height: 58px;
+
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  background: var(--bg-color);
+
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.taker-card__avatar--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--secondary-color),
+      var(--secondary-color-hover)
+    );
+
+  border-color: transparent;
+
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.taker-card__online {
+  position: absolute;
+
+  right: 1px;
+  bottom: 2px;
+
+  width: 12px;
+  height: 12px;
+
+  border: 2px solid var(--card-bg);
+  border-radius: 50%;
+
+  background: #39d98a;
+}
+
+/* =========================================================
+   IDENTITY
+========================================================= */
+
+.taker-card__identity {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.taker-card__identity h2 {
+  margin: 0;
+
+  overflow: hidden;
+
+  color: var(--text-color);
+
+  font-size: 17px;
+  font-weight: 750;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  transition: color 0.25s ease;
+}
+
+.taker-card__identity span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--text-color);
+  opacity: 0.42;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   CARD ARROW
+========================================================= */
+
+.taker-card__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 36px;
+  height: 36px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+
+  background: var(--bg-color);
+
+  color: var(--text-color);
+
+  opacity: 0.55;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.taker-card:hover .taker-card__arrow {
+  color: #fff;
+
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+
+  opacity: 1;
+
+  transform: translateX(2px);
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.taker-card__stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 7px;
+
+  margin-bottom: 22px;
+  padding: 10px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+
+  background: var(--bg-color);
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.taker-stat {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.taker-stat__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 28px;
+  height: 28px;
+
+  border-radius: 8px;
+
+  color: var(--secondary-color);
+
+  background: rgba(201, 20, 153, 0.1);
+
+  font-size: 12px;
+}
+.dark .taker-stat__icon { 
+  background: rgba(84, 185, 234, 0.1);
+}
+
+.taker-stat__icon--rating {
+  color: #ffb21c;
+
+  background: rgba(255, 178, 28, 0.1);
+}
+
+.taker-stat > div:last-child {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+.taker-stat strong {
+  color: var(--text-color);
+
+  font-size: 13px;
+  line-height: 1.1;
+
+  transition: color 0.25s ease;
+}
+
+.taker-stat span {
+  margin-top: 3px;
+
+  overflow: hidden;
+
+  color: var(--text-color);
+  opacity: 0.4;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   BOOK SECTION
+========================================================= */
+
+.taker-card__section {
+  flex: 1;
+
+  margin-bottom: 17px;
+}
+
+.taker-card__section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 11px;
+
+  color: var(--text-color);
+  opacity: 0.5;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.taker-card__section-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  min-width: 22px;
+  height: 22px;
+
+  padding: 0 6px;
+
+  border-radius: 7px;
+  
+  color: var(--secondary-color);
+
+  background: rgba(201, 20, 153, 0.1);
+
+  font-size: 10px;
+}
+.dark .taker-card__section-count {
+  background: rgba(84, 185, 234, 0.1);
+}
+
+/* =========================================================
+   BOOKS
+========================================================= */
+
+.taker-card__books {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.taker-book {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  min-width: 0;
+
+  padding: 8px 10px;
+
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  background: var(--bg-color);
+
+  color: var(--text-color);
+
+  opacity: 0.68;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.taker-book:hover {
+  background: rgba(201, 20, 153, 0.07);
+
+  border-color: rgba(201, 20, 153, 0.14);
+
+  color: var(--text-color);
+
+  opacity: 1;
+}
+.dark .taker-book:hover {
+  background: rgba(84, 185, 234, 0.1);;
+
+  border-color: rgba(84, 184, 234, 0.43);
+
+  color: var(--text-color);
+
+  opacity: 1;
+}
+
+.taker-book svg {
+  flex-shrink: 0;
+
+  color: var(--secondary-color);
+
+  font-size: 11px;
+}
+
+.taker-book span {
+  overflow: hidden;
+
+  font-size: 12px;
+  line-height: 1.3;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.taker-card__more {
+  padding: 4px 2px;
+
+  color: var(--text-color);
+  opacity: 0.35;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.taker-card__muted {
+  margin: 0;
+
+  color: var(--text-color);
+  opacity: 0.35;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+.taker-card__wishlist {
+  display: flex;
+
+  gap: 10px;
+
+  margin-top: auto;
+  margin-bottom: 17px;
+
+  padding: 11px;
+
+  border: 1px solid rgba(201, 20, 153, 0.13);
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(201, 20, 153, 0.07),
+      transparent
+    );
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+.dark .taker-card__wishlist {
+  background: rgba(84, 185, 234, 0.1) !important;
+  border: 1px solid rgba(84, 184, 234, 0.43);
+}
+
+.taker-card__wishlist-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 28px;
+  height: 28px;
+
+  border-radius: 8px;
+
+  color: var(--secondary-color);
+
+  background: rgba(201, 20, 153, 0.1);
+
+  font-size: 11px;
+}
+.dark .taker-card__wishlist-icon {
+  background: rgba(84, 185, 234, 0.1);
+}
+
+.taker-card__wishlist > div:last-child {
+  min-width: 0;
+}
+
+.taker-card__wishlist span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: var(--text-color);
+  opacity: 0.4;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.taker-card__wishlist p {
+  display: -webkit-box;
+
+  overflow: hidden;
+
+  margin: 0;
+
+  color: var(--text-color);
+  opacity: 0.68;
+
+  font-size: 11px;
+  line-height: 1.4;
+
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.taker-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-top: 15px;
+
+  border-top: 1px solid var(--border-color);
+
+  color: var(--text-color);
+  opacity: 0.45;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.taker-card__footer svg {
+  font-size: 10px;
+
+  transition: transform 0.25s ease;
+}
+
+.taker-card:hover .taker-card__footer {
+  color: var(--secondary-color);
+
+  opacity: 1;
+}
+
+.taker-card:hover .taker-card__footer svg {
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.takers__loading {
+  min-height: 400px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+
+  color: var(--text-color);
+  opacity: 0.45;
+
+  font-size: 13px;
+}
+
+.takers__loader {
+  width: 34px;
+  height: 34px;
+
+  border: 3px solid var(--border-color);
+  border-top-color: var(--secondary-color);
+
+  border-radius: 50%;
+
+  animation: takers-spin 0.8s linear infinite;
+}
+
+@keyframes takers-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.takers__empty {
+  min-height: 350px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  text-align: center;
+
+  border: 1px solid var(--border-color);
+  border-radius: 22px;
+
+  background: var(--card-bg);
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+}
+
+.takers__empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+
+  margin-bottom: 17px;
+
+  border-radius: 16px;
+
+  color: var(--secondary-color);
+
+  background: rgba(201, 20, 153, 0.1);
+
+  font-size: 21px;
+}
+
+.takers__empty h3 {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 18px;
+}
+
+.takers__empty p {
+  margin: 7px 0 0;
+
+  color: var(--text-color);
+  opacity: 0.4;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+.dark .takers {
+  .taker-card {
+    box-shadow:
+      0 18px 50px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+    &:hover {
+      box-shadow:
+        0 25px 65px rgba(0, 0, 0, 0.36),
+        0 0 0 1px rgba(201, 20, 153, 0.08);
+    }
+  }
+
+  .taker-card__stats {
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  .taker-book {
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .taker-card__wishlist {
+    background:
+      linear-gradient(
+        135deg,
+        rgba(201, 20, 153, 0.08),
+        rgba(255, 255, 255, 0.015)
+      );
+  }
+
+  .takers__empty {
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+  .takers__grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+  .takers {
+    padding: 90px 0 45px;
+  }
+
+  .takers__container {
+    width: min(
+      100% - 24px,
+      520px
+    );
+  }
+
+  .takers__header {
+    align-items: flex-start;
+
+    margin-bottom: 28px;
+  }
+
+  .takers__title {
+    font-size: 36px;
+  }
+
+  .takers__subtitle {
+    font-size: 13px;
+  }
+
+  .takers__counter {
+    min-width: 72px;
+
+    padding: 11px 12px;
+
+    border-radius: 13px;
+  }
+
+  .takers__counter span {
+    font-size: 20px;
+  }
+
+  .takers__counter small {
+    font-size: 9px;
+  }
+
+  .takers__grid {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .taker-card {
+    padding: 18px;
+
+    border-radius: 18px;
+  }
+
+  .taker-card__stats {
+    gap: 4px;
+  }
+
+  .taker-stat {
+    gap: 6px;
+  }
+
+  .taker-stat__icon {
+    width: 25px;
+    height: 25px;
+
+    font-size: 10px;
+  }
+
+  .taker-stat strong {
+    font-size: 12px;
+  }
+
+  .taker-stat span {
+    font-size: 8px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+  .takers__header {
+    gap: 12px;
+  }
+
+  .takers__title {
+    font-size: 32px;
+  }
+
+  .takers__subtitle {
+    font-size: 12px;
+  }
+
+  .taker-card__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .taker-stat {
+    padding: 5px;
+  }
+}

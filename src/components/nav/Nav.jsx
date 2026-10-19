@@ -6,11 +6,19 @@ import {
   FaMoon,
   FaStream,
   FaBell,
+  FaChevronDown,
+  FaDesktop,
 } from "react-icons/fa";
+import { GrSystem } from "react-icons/gr";
+import { FaPlus, FaDice } from "react-icons/fa6";
+import { BsFileImage } from "react-icons/bs";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import { FaBook, FaLayerGroup } from "react-icons/fa";
+import { SiBookstack } from "react-icons/si";
 import { useCart } from "../../context/CartContext";
 import { useTheme } from "../../context/ThemeContext";
 import MobileMenu from "./mobilemenu/MobileMenu";
-import logoImg from "../../assets/logo.svg";
+import logoImg from "../../assets/logo.png";
 import { useAuth } from "../../context/AuthContext";
 import {
   collection,
@@ -25,33 +33,48 @@ import {
 } from "firebase/firestore";
 import AuthModal from "../auth/AuthModal";
 import CreatePostForm from "../pages/books/CreatePostForm";
-import { FaBookMedical } from "react-icons/fa6";
+import CreatePostFormCollections from "../pages/books/collections/CreatePostFormCollections";
+import CreateComicModal from "../pages/books/Comics/CreateComicModal";
+import CreateBoardGameForm from "../pages/books/boardGames/CreateBoardGameForm";
 import { db } from "../../firebase";
 import { toast } from "react-toastify";
 import GlobalSearch from "../search/GlobalSearch";
 import FavoritesModal from "../pages/books/FavoritesModal";
+import SellerNotifications from "../notifications/SellerNotifications";
+import BuyerNotifications from "../notifications/BuyerNotifications";
+import { useUnreadSupport } from "../../hooks/useUnreadSupport";
 
 import "./nav.scss";
 
 const Nav = () => {
   const { user, userProfile } = useAuth();
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const [notificationType, setNotificationType] = useState("seller");
   const navigate = useNavigate();
   const [authOpen, setAuthOpen] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(null);
+  const [isPostMenuOpen, setIsPostMenuOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [isCollectionModalOpen, setIsCollectionModalOpen] = useState(false);
+  const [isComicModalOpen, setIsComicModalOpen] = useState(false);
+  const [isBoardGameModalOpen, setIsBoardGameModalOpen] = useState(false);
   const { cartCount, setIsCartOpen } = useCart();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, resolvedTheme, changeTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [tradeNotifications, setTradeNotifications] = useState([]);
   const desktopNotifRef = useRef(null);
   const mobileNotifRef = useRef(null);
-  const mobileMenuRef = useRef(null);
+  const themeRef = useRef(null);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const profileRef = useRef(null);
   const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+  const desktopPostMenuRef = useRef(null);
+  const mobilePostMenuRef = useRef(null);
 
   const [books, setBooks] = useState([]);
+  const [isBooksOpen, setIsBooksOpen] = useState(false);
+  const unreadSupportCount = useUnreadSupport();
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -72,6 +95,56 @@ const Nav = () => {
       if (docSnap.exists()) setProfilePhoto(docSnap.data().photoURL || null);
     });
     return () => unsub();
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const sellerTradeQuery = query(
+      collection(db, "tradeOffers"),
+      where("sellerId", "==", user.uid),
+      where("status", "==", "pending"),
+    );
+
+    const unsubSellerTrade = onSnapshot(sellerTradeQuery, (snap) => {
+      const data = snap.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          type: "sellerTrade",
+        }))
+        .filter((item) => !item.sellerRead);
+
+      setTradeNotifications((prev) => {
+        const others = prev.filter((x) => x.type !== "sellerTrade");
+        return [...others, ...data];
+      });
+    });
+
+    const buyerTradeQuery = query(
+      collection(db, "tradeOffers"),
+      where("buyerId", "==", user.uid),
+    );
+
+    const unsubBuyerTrade = onSnapshot(buyerTradeQuery, (snap) => {
+      const data = snap.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          type: "buyerTrade",
+        }))
+        .filter((item) => item.status !== "pending" && !item.buyerRead);
+
+      setTradeNotifications((prev) => {
+        const others = prev.filter((x) => x.type !== "buyerTrade");
+        return [...others, ...data];
+      });
+    });
+
+    return () => {
+      unsubSellerTrade();
+      unsubBuyerTrade();
+    };
   }, [user]);
 
   useEffect(() => {
@@ -229,49 +302,101 @@ const Nav = () => {
       (n.status === "accepted" || n.status === "rejected") &&
       !n.buyerNotification?.read,
   ).length;
+  const sellerTradeCount = tradeNotifications.filter(
+    (t) => t.type === "sellerTrade",
+  ).length;
+
+  const buyerTradeCount = tradeNotifications.filter(
+    (t) => t.type === "buyerTrade",
+  ).length;
 
   const desktopProfileRef = useRef(null);
   const mobileProfileRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        isNotifOpen &&
-        !(
-          (desktopNotifRef.current &&
-            desktopNotifRef.current.contains(event.target)) ||
-          (mobileNotifRef.current &&
-            mobileNotifRef.current.contains(event.target))
-        )
-      ) {
-        setIsNotifOpen(false);
-      }
+      if (!isProfileOpen) return;
 
-      if (
-        isMobileMenuOpen &&
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(event.target)
-      ) {
-        setIsMobileMenuOpen(false);
-      }
+      const clickedInsideDesktop = desktopProfileRef.current?.contains(
+        event.target,
+      );
 
-      if (
-        isProfileOpen &&
-        !(
-          (desktopProfileRef.current &&
-            desktopProfileRef.current.contains(event.target)) ||
-          (mobileProfileRef.current &&
-            mobileProfileRef.current.contains(event.target))
-        )
-      ) {
+      const clickedInsideMobile = mobileProfileRef.current?.contains(
+        event.target,
+      );
+
+      if (!clickedInsideDesktop && !clickedInsideMobile) {
         setIsProfileOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isNotifOpen, isMobileMenuOpen, isProfileOpen]);
+    document.addEventListener("click", handleClickOutside);
 
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isProfileOpen]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        isThemeMenuOpen &&
+        themeRef.current &&
+        !themeRef.current.contains(event.target)
+      ) {
+        setIsThemeMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isThemeMenuOpen]);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!isPostMenuOpen) return;
+
+      const clickedInsideDesktop = desktopPostMenuRef.current?.contains(
+        event.target,
+      );
+
+      const clickedInsideMobile = mobilePostMenuRef.current?.contains(
+        event.target,
+      );
+
+      if (!clickedInsideDesktop && !clickedInsideMobile) {
+        setIsPostMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isPostMenuOpen]);
+
+  const openBookPost = () => {
+    setIsPostMenuOpen(false);
+    setIsPostModalOpen(true);
+  };
+
+  const openCollectionPost = () => {
+    setIsPostMenuOpen(false);
+    setIsCollectionModalOpen(true);
+  };
+const openComicPost = () => {
+  console.log("COMIC POST CLICKED");
+
+  setIsPostMenuOpen(false);
+  setIsComicModalOpen(true);
+};
+const openBoardGamePost = () => {
+  setIsPostMenuOpen(false);
+  setIsBoardGameModalOpen(true);
+};
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
       <div className="container mx-auto px-4 py-3">
@@ -293,17 +418,9 @@ const Nav = () => {
             </button>
           </div>
           {/* Desktop nav + icons */}
-          <div className="hidden md:flex items-center space-x-6">
+          {/* space-x-6 */}
+          <div className="hidden md:flex items-center space-x-3">
             <nav className="flex space-x-6">
-              {userProfile?.role === "admin" && (
-                <NavLink
-                  to="/admin"
-                  className={({ isActive }) =>
-                    `font-medium ${isActive ? "text-red-500" : "text-gray-700 dark:text-gray-300 hover:text-red-400"}`
-                  }>
-                  Admin Panel
-                </NavLink>
-              )}
               <NavLink
                 to="/"
                 className={({ isActive }) =>
@@ -311,13 +428,139 @@ const Nav = () => {
                 }>
                 Home
               </NavLink>
-              <NavLink
-                to="/books"
-                className={({ isActive }) =>
-                  `font-medium ${isActive ? "text-[var(--secondary-color)]" : "text-gray-700 dark:text-gray-300 hover:text-[var(--secondary-color-hover)]"}`
-                }>
-                Books
-              </NavLink>
+<div className="relative group">
+  <button className="flex items-center gap-1 font-medium text-gray-700 dark:text-gray-300 hover:text-[var(--secondary-color-hover)] transition-colors">
+    <span className="t-1">Library</span>
+
+    <FaChevronDown className="text-xs transition-transform duration-300 group-hover:rotate-180 mt-0.5" />
+  </button>
+
+  {/* Library dropdown */}
+  <div className="absolute left-0 top-full pt-3 w-52 z-50 invisible opacity-0 translate-y-1 pointer-events-none group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200">
+    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl overflow-visible">
+
+      {/* Books */}
+      <div className="relative group/books">
+        <div className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[var(--secondary-color-hover)] transition-colors cursor-pointer">
+          <span>Books</span>
+
+          <FaChevronDown className="text-[10px] -rotate-90" />
+        </div>
+
+        {/* Books submenu */}
+<div className="absolute left-full top-0 w-52 invisible opacity-0 translate-x-1 pointer-events-none group-hover/books:visible group-hover/books:opacity-100 group-hover/books:translate-x-0 group-hover/books:pointer-events-auto transition-all duration-200">
+          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl overflow-hidden">
+
+            <NavLink
+              to="/books"
+              className={({ isActive }) =>
+                `block px-4 py-3 text-sm transition-colors ${
+                  isActive
+                    ? "bg-gray-100 dark:bg-gray-700 text-[var(--secondary-color)]"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[var(--secondary-color-hover)]"
+                }`
+              }>
+              Books
+            </NavLink>
+
+            <NavLink
+              to="/book-collections"
+              className={({ isActive }) =>
+                `block px-4 py-3 text-sm transition-colors ${
+                  isActive
+                    ? "bg-gray-100 dark:bg-gray-700 text-[var(--secondary-color)]"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[var(--secondary-color-hover)]"
+                }`
+              }>
+              Book Collections
+            </NavLink>
+
+          </div>
+        </div>
+      </div>
+
+      {/* Comics & Games */}
+      {/* Hobby Zone */}
+      <div className="relative group/others">
+        <div className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[var(--secondary-color-hover)] transition-colors cursor-pointer">
+          <span>Hobby Zone</span>
+
+          <FaChevronDown className="text-[10px] -rotate-90" />
+        </div>
+
+        {/* Hobby Zone submenu */}
+<div className="absolute left-full top-0 w-52 invisible opacity-0 translate-x-1 pointer-events-none group-hover/others:visible group-hover/others:opacity-100 group-hover/others:translate-x-0 group-hover/others:pointer-events-auto transition-all duration-200">
+          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl overflow-hidden">
+
+            <NavLink
+              to="/comics"
+              className={({ isActive }) =>
+                `block px-4 py-3 text-sm transition-colors ${
+                  isActive
+                    ? "bg-gray-100 dark:bg-gray-700 text-[var(--secondary-color)]"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[var(--secondary-color-hover)]"
+                }`
+              }>
+              Comics
+            </NavLink>
+            <NavLink
+              to="/board-games"
+              className={({ isActive }) =>
+                `block px-4 py-3 text-sm transition-colors ${
+                  isActive
+                    ? "bg-gray-100 dark:bg-gray-700 text-[var(--secondary-color)]"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[var(--secondary-color-hover)]"
+                }`
+              }>
+              Board Games
+            </NavLink>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+              <div
+                className={`relative group ${
+                  !user ? "opacity-50 cursor-not-allowed" : ""
+                }`}>
+                <button
+                  type="button"
+                  disabled={!user}
+                  className={`flex items-center gap-1 font-medium transition-colors ${
+                    user
+                      ? "text-gray-700 dark:text-gray-300 hover:text-[var(--secondary-color-hover)] cursor-pointer"
+                      : "text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                  }`}>
+                  <span className="t-1">Services</span>
+
+                  <FaChevronDown
+                    className={`text-xs mt-0.5 transition-transform duration-300 ${
+                      user ? "group-hover:rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {user && (
+                  <div className="absolute left-0 top-full pt-3 w-48 z-50 invisible opacity-0 translate-y-1 pointer-events-none group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200">
+                    <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg overflow-hidden">
+                      <NavLink
+                        to="/hobbyflow-reader"
+                        className={({ isActive }) =>
+                          `block px-4 py-3 text-sm transition-colors ${
+                            isActive
+                              ? "bg-gray-100 dark:bg-gray-700 text-[var(--secondary-color)]"
+                              : "text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 hover:text-[var(--secondary-color-hover)]"
+                          }`
+                        }>
+                        HobbyFlow Reader
+                      </NavLink>
+                    </div>
+                  </div>
+                )}
+              </div>
               <NavLink
                 to="/takers"
                 className={({ isActive }) =>
@@ -326,141 +569,244 @@ const Nav = () => {
                 Takers
               </NavLink>
               <NavLink
-                to="/about"
+                to="/takers-premium"
                 className={({ isActive }) =>
                   `font-medium ${isActive ? "text-[var(--secondary-color)]" : "text-gray-700 dark:text-gray-300 hover:text-[var(--secondary-color-hover)]"}`
                 }>
-                About
+                Premium
+              </NavLink>
+              <NavLink
+                to="/club"
+                className={({ isActive }) =>
+                  `font-medium ${isActive ? "text-[var(--secondary-color)]" : "text-gray-700 dark:text-gray-300 hover:text-[var(--secondary-color-hover)]"}`
+                }>
+                HobbyFlow Club
               </NavLink>
             </nav>
 
             <div className="flex items-center space-x-4">
+              {userProfile?.role === "admin" && (
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    // `font-medium ${isActive ? "text-red-500" : "text-gray-700 dark:text-gray-300 hover:text-red-400"}`
+                    `font-medium ${isActive ? "" : "text-gray-700 dark:text-gray-300 hover:text-red-400"}`
+                  }>
+                  <span className="relative inline-flex">
+                    <MdOutlineAdminPanelSettings className="text-3xl" />
+
+                    {unreadSupportCount > 0 && (
+                      <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-900" />
+                    )}
+                  </span>
+                </NavLink>
+              )}
               {userProfile?.taker && (
-                <button
-                  onClick={() => setIsPostModalOpen(true)}
-                  className="p-2 rounded-full text-2xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <FaBookMedical />
-                </button>
+                <div className="relative" ref={desktopPostMenuRef}>
+                  <button
+                    onClick={() => setIsPostMenuOpen((prev) => !prev)}
+                    className="p-2 rounded-full text-2xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                    aria-label="Create post"
+                    title="Create post">
+                    <FaPlus
+                      className={`transition-transform duration-200 ${
+                        isPostMenuOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {isPostMenuOpen && (
+                    <div className="absolute right-0 top-full mt-3 w-64 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl overflow-hidden z-50">
+
+                      <button
+                        onClick={openBookPost}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                          <FaBook />
+                        </span>
+
+                        <span>
+                          <span className="block text-sm font-semibold text-gray-800 dark:text-white">
+                            One Book Post
+                          </span>
+                          <span className="block text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                            Sell one individual book
+                          </span>
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={openCollectionPost}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                          <SiBookstack />
+                        </span>
+
+                        <span>
+                          <span className="block text-sm font-semibold text-gray-800 dark:text-white">
+                            Book Collection Post
+                          </span>
+                          <span className="block text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                            Sell several books together
+                          </span>
+                        </span>
+                      </button>
+<button
+  onClick={openComicPost}
+  className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+  <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+    <BsFileImage />
+  </span>
+
+  <span>
+    <span className="block text-sm font-semibold text-gray-800 dark:text-white">
+      Comic Post
+    </span>
+
+    <span className="block text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+      Sell one individual comic
+    </span>
+  </span>
+</button>
+<button
+  onClick={openBoardGamePost}
+  className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+>
+  <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+    <FaDice />
+  </span>
+
+  <span>
+    <span className="block text-sm font-semibold text-gray-800 dark:text-white">
+      Board Game Post
+    </span>
+
+    <span className="block text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+      Sell or rent a board game
+    </span>
+  </span>
+</button>
+                    </div>
+                  )}
+                </div>
               )}
 
               {/* Notifications */}
               <div className="relative" ref={desktopNotifRef}>
                 {user && (
                   <button
-                    onClick={() => setIsNotifOpen(!isNotifOpen)}
+                    onClick={() => {
+                      if (!isNotifOpen) {
+                        if (sellerCount + sellerTradeCount > 0) {
+                          setNotificationType("seller");
+                        } else {
+                          setNotificationType("buyer");
+                        }
+                      }
+
+                      setIsNotifOpen(!isNotifOpen);
+                    }}
                     className="relative p-2 rounded-full text-2xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                     <FaBell />
-                    {sellerCount + buyerCount > 0 && (
-                      <span className="absolute -top-0 -right-0 bg-red-600 text-white text-xs font-bold px-1 rounded-full">
-                        {sellerCount + buyerCount}
+                    {sellerCount +
+                      buyerCount +
+                      sellerTradeCount +
+                      buyerTradeCount >
+                      0 && (
+                      <span
+                        className="absolute -top-0 -right-0 w-[18px] px-1
+              flex
+              items-center
+              justify-center
+              text-[10px]
+              font-bold
+              leading-none
+              h-[18px] bg-[var(--secondary-color)] text-white text-xs font-bold px-1 rounded-full">
+                        {sellerCount +
+                          buyerCount +
+                          sellerTradeCount +
+                          buyerTradeCount}
                       </span>
                     )}
                   </button>
                 )}
                 {isNotifOpen && (
-                  <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg z-50 max-h-96 overflow-y-auto">
-                    {notifications.length === 0 && (
-                      <p className="p-2 text-sm text-gray-500 dark:text-gray-400">
-                        No new notifications
-                      </p>
+                  <>
+                    {notificationType === "seller" ? (
+                      <SellerNotifications
+                        isOpen={true}
+                        onClose={() => setIsNotifOpen(false)}
+                      />
+                    ) : (
+                      <BuyerNotifications
+                        isOpen={true}
+                        onClose={() => setIsNotifOpen(false)}
+                      />
                     )}
-                    {notifications.length > 0 &&
-                      notifications.map((n) => (
-                        <div
-                          key={n.id}
-                          className={`border-b last:border-b-0 p-2 ${n.type === "buyer" && n.buyerNotification?.read ? "opacity-50 pointer-events-none" : ""}`}
-                          onClick={() => {
-                            markAsRead(n);
-                            setIsNotifOpen(false);
-                          }}>
-                          <p className="text-base text-start font-medium text-gray-700 dark:text-white">
-                            {n.items?.[0]?.name} (
-                            {n.items?.[0]?.purchaseType === "rental"
-                              ? "Lending"
-                              : "Buy"}
-                            )
-                          </p>
-                          {n.type === "seller" ? (
-                            <div className="flex flex-row gap-2 mt-1">
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`/orders/${n.id}`);
-                                  setIsNotifOpen(false);
-                                }}
-                                className="bg-white dark:bg-gray-800 text-[var(--secondary-color)] cursor text-start w-32 py-1 px-2 rounded text-base">
-                                More Info
-                              </button>
-
-                              <div className="flex gap-2 justify-start">
-                                <button
-                                  onClick={() => handleAccept(n.id, n)}
-                                  className="bg-[var(--accept-color)] hover:[var(--accept-color-hover)] text-white py-1 px-2 rounded text-base">
-                                  Accept
-                                </button>
-
-                                <button
-                                  onClick={() => handleReject(n.id)}
-                                  className="bg-[var(--reject-color)] hover:[var(--reject-color-hover)] text-white py-1 px-2 rounded text-base">
-                                  Reject
-                                </button>
-                              </div>
-                            </div>
-                          ) : (
-                            <>
-                              <p className="text-base mt-1 text-[var(--accept-color)] cursor">
-                                <span className="text-gray-600 dark:text-white">
-                                  Status:
-                                </span>{" "}
-                                {n.buyerNotification?.status === "accepted"
-                                  ? "Accepted"
-                                  : "Rejected"}
-                              </p>
-                              {n.buyerNotification?.status === "accepted" && (
-                                <>
-                                  <p className="text-gray-600 dark:text-white">
-                                    <b>Seller card number:</b>{" "}
-                                    <span className="text-[var(--secondary-color)]">
-                                      {n.buyerNotification?.cardNumber}
-                                    </span>
-                                  </p>
-                                  {n.buyerNotification?.bankName && (
-                                    <p className="text-gray-600 dark:text-white">
-                                      <b>Bank:</b>{" "}
-                                      {n.buyerNotification.bankName}
-                                    </p>
-                                  )}
-                                  {n.buyerNotification?.totalAmount !==
-                                    undefined && (
-                                    <p className="text-gray-600 dark:text-white">
-                                      <b>Total Sum:</b>{" "}
-                                      {n.items?.reduce(
-                                        (sum, item) =>
-                                          sum +
-                                          (item.purchaseType === "rental"
-                                            ? item.priceLending
-                                            : item.price),
-                                        0,
-                                      )}{" "}
-                                      ₴
-                                    </p>
-                                  )}
-                                </>
-                              )}
-                            </>
-                          )}
-                        </div>
-                      ))}
-                  </div>
+                  </>
                 )}
               </div>
 
-              {/* Theme toggle */}
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full text-2xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                {theme === "light" ? <FaMoon /> : <FaSun />}
-              </button>
+              {/* Theme selector */}
+              <div className="relative" ref={themeRef}>
+                <button
+                  type="button"
+                  onClick={() => setIsThemeMenuOpen((prev) => !prev)}
+                  className="p-2 rounded-full text-2xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                  aria-label="Change theme"
+                  title="Change theme">
+                  {theme === "system" ? (
+                    <GrSystem />
+                  ) : resolvedTheme === "dark" ? (
+                    <FaMoon />
+                  ) : (
+                    <FaSun />
+                  )}
+                </button>
+
+                {isThemeMenuOpen && (
+                  <div className="theme-popup">
+                    <button
+                      type="button"
+                      className={`theme-popup__option ${
+                        theme === "light" ? "theme-popup__option--active" : ""
+                      }`}
+                      onClick={() => {
+                        changeTheme("light");
+                        setIsThemeMenuOpen(false);
+                      }}>
+                      <FaSun />
+                      <span>Light</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={`theme-popup__option ${
+                        theme === "dark" ? "theme-popup__option--active" : ""
+                      }`}
+                      onClick={() => {
+                        changeTheme("dark");
+                        setIsThemeMenuOpen(false);
+                      }}>
+                      <FaMoon />
+                      <span>Dark</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={`theme-popup__option ${
+                        theme === "system" ? "theme-popup__option--active" : ""
+                      }`}
+                      onClick={() => {
+                        changeTheme("system");
+                        setIsThemeMenuOpen(false);
+                      }}>
+                      <GrSystem />
+                      <span>System</span>
+                    </button>
+                  </div>
+                )}
+              </div>
 
               {/* Cart */}
               <div
@@ -549,129 +895,160 @@ const Nav = () => {
           {/* Mobile icons & menu */}
           <div className="flex md:hidden items-center space-x-3">
             {userProfile?.taker && (
-              <button
-                onClick={() => setIsPostModalOpen(true)}
-                className="p-1 rounded-full text-2xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                <FaBookMedical />
-              </button>
+              <div className="relative" ref={mobilePostMenuRef}>
+                <button
+                  onClick={() => setIsPostMenuOpen((prev) => !prev)}
+                  className="p-1 rounded-full text-2xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                  aria-label="Create post"
+                  title="Create post">
+                  <FaPlus
+                    className={`transition-transform duration-200 ${
+                      isPostMenuOpen ? "rotate-190" : ""
+                    }`}
+                  />
+                </button>
+
+                {isPostMenuOpen && (
+                  <div
+                    className="
+                    fixed left-1/2 top-[100%] -translate-x-1/2 -translate-y-1/2
+                    w-[calc(100%-2rem)] max-w-64
+                    rounded-xl border border-gray-200 dark:border-gray-700
+                    bg-white dark:bg-gray-800
+                    shadow-xl overflow-hidden z-50
+
+                    sm:absolute sm:left-auto sm:right-0 sm:top-full
+                    sm:translate-x-0 sm:translate-y-0 sm:mt-3 sm:w-64
+                  ">
+                    <button
+                      onClick={openBookPost}
+                      className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                      <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                        <FaBook />
+                      </span>
+
+                      <span>
+                        <span className="block text-sm font-semibold text-gray-800 dark:text-white">
+                          One Book Post
+                        </span>
+
+                        <span className="block text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                          Sell one individual book
+                        </span>
+                      </span>
+                    </button>
+
+                    <button
+                      onClick={openCollectionPost}
+                      className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                      <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                        <SiBookstack />
+                      </span>
+
+                      <span>
+                        <span className="block text-sm font-semibold text-gray-800 dark:text-white">
+                          Book Collection Post
+                        </span>
+
+                        <span className="block text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                          Sell several books together
+                        </span>
+                      </span>
+                    </button>
+<button
+  onClick={openComicPost}
+  className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+  <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+    <BsFileImage />
+  </span>
+
+  <span>
+    <span className="block text-sm font-semibold text-gray-800 dark:text-white">
+      Comics Post
+    </span>
+
+    <span className="block text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+      Sell one individual comic
+    </span>
+  </span>
+</button>
+<button
+  onClick={openBoardGamePost}
+  className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+>
+  <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+    <FaDice />
+  </span>
+
+  <span>
+    <span className="block text-sm font-semibold text-gray-800 dark:text-white">
+      Board Game Post
+    </span>
+
+    <span className="block text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+      Sell or rent a board game
+    </span>
+  </span>
+</button>
+                  </div>
+                )}
+              </div>
             )}
 
             {/* Mobile Notifications */}
             <div className="relative" ref={mobileNotifRef}>
               {user && (
                 <button
-                  onClick={() => setIsNotifOpen(!isNotifOpen)}
+                  onClick={() => {
+                    if (!isNotifOpen) {
+                      if (sellerCount + sellerTradeCount > 0) {
+                        setNotificationType("seller");
+                      } else {
+                        setNotificationType("buyer");
+                      }
+                    }
+
+                    setIsNotifOpen(!isNotifOpen);
+                  }}
                   className="relative p-2 rounded-full text-2xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                   <FaBell />
-                  {sellerCount + buyerCount > 0 && (
-                    <span className="absolute -top-0 -right-0 bg-red-600 text-white text-xs font-bold px-1 rounded-full">
-                      {sellerCount + buyerCount}
+                  {sellerCount +
+                    buyerCount +
+                    sellerTradeCount +
+                    buyerTradeCount >
+                    0 && (
+                    <span
+                      className="absolute -top-0 -right-0 px-1
+              flex
+              items-center
+              justify-center text-[10px]
+              font-bold
+              leading-none bg-[var(--secondary-color)] w-[18px]
+              h-[18px] text-white text-xs font-bold px-1 rounded-full">
+                      {sellerCount +
+                        buyerCount +
+                        sellerTradeCount +
+                        buyerTradeCount}
                     </span>
                   )}
                 </button>
               )}
               {isNotifOpen && (
-                <div className="absolute -left-[100px] mt-1 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg z-50 max-h-96 overflow-y-auto">
-                  {notifications.length === 0 && (
-                    <p className="p-2 text-sm text-gray-500 dark:text-gray-400">
-                      No new notifications
-                    </p>
+                <>
+                  {notificationType === "seller" ? (
+                    <SellerNotifications
+                      isOpen={true}
+                      onClose={() => setIsNotifOpen(false)}
+                    />
+                  ) : (
+                    <BuyerNotifications
+                      isOpen={true}
+                      onClose={() => setIsNotifOpen(false)}
+                    />
                   )}
-                  {notifications.length > 0 &&
-                    notifications.map((n) => (
-                      <div
-                        key={n.id}
-                        className={`border-b last:border-b-0 p-2 ${n.type === "buyer" && n.buyerNotification?.read ? "opacity-50 pointer-events-none" : ""}`}
-                        onClick={() => {
-                          markAsRead(n);
-                          setIsNotifOpen(false);
-                        }}>
-                        <p className="text-base font-medium text-gray-700 dark:text-white">
-                          {n.items?.[0]?.name} (
-                          {n.items?.[0]?.purchaseType === "rental"
-                            ? "Lending"
-                            : "Buy"}{" "}
-                          —{" "}
-                          {n.items?.[0]?.purchaseType === "rental"
-                            ? n.items?.[0]?.priceLending
-                            : n.items?.[0]?.price}{" "}
-                          ₴₴ )
-                        </p>
-                        {n.type === "seller" ? (
-                          <div className="flex flex-row gap-3 mt-1">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                navigate(`/orders/${n.id}`);
-                                setIsNotifOpen(false);
-                              }}
-                              className="bg-white dark:bg-gray-800 text-[var(--secondary-color)] text-start py-1 px-2 rounded text-base">
-                              More Info
-                            </button>
-
-                            <div className="flex gap-2">
-                              <button
-                                onClick={() => handleAccept(n.id, n)}
-                                className="bg-[var(--accept-color)] hover:[var(--accept-color-hover)] text-white py-1 px-2 rounded text-base">
-                                Accept
-                              </button>
-
-                              <button
-                                onClick={() => handleReject(n.id)}
-                                className="bg-[var(--reject-color)] hover:[var(--reject-color-hover)] text-white py-1 px-2 rounded text-base">
-                                Reject
-                              </button>
-                            </div>
-                          </div>
-                        ) : (
-                          <>
-                            <p className="text-base mt-1 text-[var(--accept-color)] cursor">
-                              <span className="text-gray-600 dark:text-white">
-                                Status:
-                              </span>{" "}
-                              {n.buyerNotification?.status === "accepted"
-                                ? "Accepted"
-                                : "Rejected"}
-                            </p>
-                            {n.buyerNotification?.status === "accepted" && (
-                              <>
-                                <p className="text-gray-600 dark:text-white">
-                                  <b>Seller card number:</b>{" "}
-                                  <span className="text-[var(--secondary-color)]">
-                                    {n.buyerNotification?.cardNumber}
-                                  </span>
-                                </p>
-                                {n.buyerNotification?.bankName && (
-                                  <p className="text-gray-600 dark:text-white">
-                                    <b>Bank:</b> {n.buyerNotification.bankName}
-                                  </p>
-                                )}
-                                {n.buyerNotification?.totalAmount !==
-                                  undefined && (
-                                  <p className="text-gray-600 dark:text-white">
-                                    <b>Total Sum:</b>{" "}
-                                    {n.items?.reduce(
-                                      (sum, item) =>
-                                        sum +
-                                        (item.purchaseType === "rental"
-                                          ? item.priceLending
-                                          : item.price),
-                                      0,
-                                    )}{" "}
-                                    ₴
-                                  </p>
-                                )}
-                              </>
-                            )}
-                          </>
-                        )}
-                      </div>
-                    ))}
-                </div>
+                </>
               )}
             </div>
-
-            {/* Cart */}
             <div
               onClick={() => setIsCartOpen(true)}
               className="relative p-1 rounded-full text-2xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
@@ -772,18 +1149,35 @@ const Nav = () => {
           </div>
         </div>
       </div>
-
-      <div ref={mobileMenuRef}>
-        <MobileMenu
-          isOpen={isMobileMenuOpen}
-          onClose={() => setIsMobileMenuOpen(false)}
-        />
-      </div>
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+      />
 
       {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+
       {isPostModalOpen && (
         <CreatePostForm onClose={() => setIsPostModalOpen(false)} />
       )}
+
+      {isCollectionModalOpen && (
+        <CreatePostFormCollections
+          onClose={() => setIsCollectionModalOpen(false)}
+        />
+      )}
+
+      {isComicModalOpen && (
+        <CreateComicModal
+          isOpen={isComicModalOpen}
+          onClose={() => setIsComicModalOpen(false)}
+        />
+      )}
+      {isBoardGameModalOpen && (
+  <CreateBoardGameForm
+    onClose={() => setIsBoardGameModalOpen(false)}
+  />
+)}
+
       <FavoritesModal isOpen={isFavoritesOpen} setIsOpen={setIsFavoritesOpen} />
     </header>
   );

@@ -1,0 +1,34 @@
+.book-upload-modal__agreement {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 20px 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.book-upload-modal__agreement input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+.book-upload-modal__agreement input:disabled {
+  cursor: not-allowed;
+}
+
+.book-upload-modal__agreement-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-color);
+  opacity: 0.9;
+}
+
+.book-upload-modal__confirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
