@@ -135,7 +135,7 @@ By combining marketplace functionality, digital reading, and community-driven fe
 
 ## 🌍 Explore HobbyFlow
 
-**Website:** https://bookflow.guru
+**Website:** https://bookflow.online
 
 **GitHub:** https://github.com/papchenko/hobbyflow
 
